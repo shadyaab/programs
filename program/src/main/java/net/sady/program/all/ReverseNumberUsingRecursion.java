@@ -13,8 +13,7 @@ public class ReverseNumberUsingRecursion {
 			resultant = (resultant * 10) + (num % 10) ;
 			
 		}
-		
-		return  null;
+		return  resultant;
 	}
 	
 	public static void main(String[] args) {
