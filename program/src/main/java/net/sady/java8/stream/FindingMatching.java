@@ -2,6 +2,7 @@ package net.sady.java8.stream;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 public class FindingMatching {
 	
@@ -27,6 +28,8 @@ public class FindingMatching {
 		findAny(menu);
 		
 		//findFirst(menu);
+		
+		findAnyWithIfPresent(menu);
 	}
 	
 	public static void anyMatch(List<Dish> menu){
@@ -51,10 +54,21 @@ public class FindingMatching {
 	}
 	
 	private static void findAny(List<Dish> menu) {
-		Boolean b = menu.stream()
-			.noneMatch(d -> d.getCalories() < 1000);
+		Optional<Dish> b = menu.stream()
+			.filter(d -> d.isVegetarian())
+			.findAny();
+		if(b.isPresent()){
+			System.out.println(b);
+		}
 		
-		System.out.println(b);
+	}
+	
+	private static void findAnyWithIfPresent(List<Dish> menu) {
+		menu.stream()
+			.filter(Dish::isVegetarian)
+			.findAny()
+			.ifPresent(d -> System.out.println(d.getName()));
+			
 	}
 }
 
