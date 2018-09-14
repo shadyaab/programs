@@ -4,6 +4,9 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 
 public class BufferedReaderAsFunctionalProgramming {
 	
@@ -13,7 +16,6 @@ public class BufferedReaderAsFunctionalProgramming {
 		//System.out.println(processFile());
 		System.out.println(processFile((BufferedReader br) -> br.readLine()));
 		System.out.println(processFile((BufferedReader br) -> br.readLine() + br.readLine()));
-
 	}
 	
 	public static String processFile(BufferedReaderProcessor p) throws FileNotFoundException, IOException{
