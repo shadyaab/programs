@@ -1,4 +1,4 @@
-package net.sady.java8.combinedconcept;
+package net.sady.java8.stream.combinedconcept;
 
 import java.util.Arrays;
 import java.util.List;
@@ -22,6 +22,7 @@ public class CombinedConcept {
 				new Transaction(mario, 2012, 700), 
 				new Transaction(alan, 2012, 950)
 				);
+		
 		findSortedTransactionIn2011(transactions);
 		findUniqueCity(transactions);
 		findUniqueCityUsingSet(transactions);

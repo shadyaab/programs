@@ -11,7 +11,7 @@ import java.util.stream.Stream;
 
 public class BuildingStream {
 	
-	public static final String FILE_URL = "/Users/shadyaab/git/programs/program/src/main/java/net/sady/java8/stream/data.txt";
+	public static final String FILE_URL = "C:\\Users\\sakhtar\\git\\programs\\program\\src\\main\\java\\net\\sady\\java8\\stream\\data.txt";
 
 	public static void main(String[] args) {
 		streamFromValues();
@@ -54,7 +54,10 @@ public class BuildingStream {
 
 	private static void streamFromArray() {
 		int [] numbers = {1,2,3,4,5,6};
-		IntStream stream = Arrays.stream(numbers);
+		IntStream stream = Arrays
+				.stream(numbers);
+		
+		stream.forEach(System.out::println);
 	}
 
 	private static void streamFromValues() {

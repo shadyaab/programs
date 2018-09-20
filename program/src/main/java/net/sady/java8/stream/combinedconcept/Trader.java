@@ -1,4 +1,4 @@
-package net.sady.java8.combinedconcept;
+package net.sady.java8.stream.combinedconcept;
 
 public class Trader {
 

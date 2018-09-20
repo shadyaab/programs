@@ -1,13 +1,11 @@
-package net.sady.java8.reduce;
+package net.sady.java8.stream;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 import net.sady.java8.stream.Dish;
 
-public class Basic {
+public class ReduceInPractice {
 	
 	public static void main(String[] args) {
 	
