@@ -1,4 +1,4 @@
-package net.sady.java8.behaviorasvalue;
+package net.sady.java8.functionalprogrammingconcept;
 
 import java.util.ArrayList;
 import java.util.Arrays;

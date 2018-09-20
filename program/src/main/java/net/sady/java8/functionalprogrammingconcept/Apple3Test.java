@@ -1,14 +1,18 @@
-package net.sady.java8.behaviorasvalue;
+package net.sady.java8.functionalprogrammingconcept;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-class AppleUtility{
-	public List<Apple> filterApple(List<Apple> appleList) {
+interface ApplePredicate3{
+	boolean test(Apple apple);
+}
+
+class AppleUtility3{
+	public List<Apple> filterApple(List<Apple> appleList, ApplePredicate3 p) {
 		List<Apple> result = new ArrayList<Apple>();
 		for(Apple apple: appleList) {
-			if(apple.getColor().equalsIgnoreCase("green")) {
+			if(p.test(apple)) {
 				result.add(apple);
 			}
 		}
@@ -17,7 +21,7 @@ class AppleUtility{
 }
 
 
-public class AppleTest {
+public class Apple3Test {
 	public static void main(String[] args) {
 		List<Apple> appleList = new ArrayList<>(
 				Arrays.asList(new Apple(1,"green", 25), 
@@ -26,13 +30,10 @@ public class AppleTest {
 					      new Apple(4, "red", 60),
 					      new Apple(5, "blue", 50))); 
 		
-		AppleUtility utility = new AppleUtility();
-		List<Apple> filterList = utility.filterApple(appleList);
+		AppleUtility3 utility = new AppleUtility3();
+		List<Apple> filterList = utility.filterApple(appleList, (Apple apple) -> apple.getColor().equalsIgnoreCase("green"));
 		System.out.println(filterList);
 	}
-	
-	
-	
 }
 
 

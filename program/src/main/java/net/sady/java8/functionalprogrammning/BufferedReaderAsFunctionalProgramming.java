@@ -1,4 +1,4 @@
-package net.sady.java8;
+package net.sady.java8.functionalprogrammning;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;

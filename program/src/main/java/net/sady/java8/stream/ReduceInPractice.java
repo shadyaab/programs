@@ -23,6 +23,7 @@ public class ReduceInPractice {
 		
 		countElements(menu);
 		
+		//Calculate total calories
 		sumCalories(menu);
 		
 		maxCalory(menu);
@@ -30,20 +31,20 @@ public class ReduceInPractice {
 		 
 	}
 
-	private static void countElements(List<Dish> menu) {
-		int count = menu.stream()
-			 	.map(d -> 1)
-				.reduce(0,(a,b) -> a+b);
-		
-		System.out.println(count);
-	}
-	
 	private static void sumCalories(List<Dish> menu) {
 		int sum =  menu.stream()
 			 	.map(d -> d.getCalories())
 				.reduce(0,(a,b) -> a+b);
 	 
 		System.out.println(sum);
+	}
+	
+	private static void countElements(List<Dish> menu) {
+		int count = menu.stream()
+			 	.map(d -> 1)
+				.reduce(0,(a,b) -> a+b);
+		
+		System.out.println(count);
 	}
 	
 	private static void maxCalory(List<Dish> menu) {
