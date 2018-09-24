@@ -3,9 +3,9 @@ package net.sady.java8.stream;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Arrays;
+import java.util.List;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -21,7 +21,13 @@ public class BuildingStream {
 		//Infinite stream
 		streamIterate();
 		streamGenerate();
+		
+		//calculate sum of number in array
+		int arr []= {3,5,6,7,3};
+		streamFromArrayAndCalculateSum(arr);
 	}
+
+	
 
 	//It doesnot apply functional on the produced value.
 	private static void streamGenerate() {
@@ -66,6 +72,13 @@ public class BuildingStream {
 					.anyMatch(t -> t.equals("Red"));
 			
 		System.out.println(b);
+	}
+	
+	private static void streamFromArrayAndCalculateSum(int[] arr) {
+		//Array stream return int stream
+		int sum = Arrays.stream(arr)
+				.reduce(0, (a, b) -> a+b);
+		System.out.println(sum);
 	}
 	
 }

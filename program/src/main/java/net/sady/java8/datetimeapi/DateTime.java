@@ -1,4 +1,4 @@
-package net.sady.java8.date_time_api;
+package net.sady.java8.datetimeapi;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;
