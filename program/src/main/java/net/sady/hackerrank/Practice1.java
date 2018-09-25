@@ -9,6 +9,23 @@ public class Practice1 {
 		
 		//staircase(3);
 		System.out.println(timeConversion("12:01:10PM"));
+		int [] c =  {2,4,1,5,8,4,2,1};
+		Arrays.stream(c)
+			.forEach(System.out::println);
+		System.out.println(c);
+		int temp = 0;
+		for(int i = 0; i < c.length; i++){
+            for(int j = 0; j< c.length; j++){
+                if(j < c.length-1  && c[j] < c[j+1]){
+                    temp = c[j];
+                    c[j] = c[j+1];
+                    c[j+1] = temp;
+                }
+            }
+        }
+		Arrays.stream(c)
+		.forEach(System.out::println);
+		
 		
 	}
 	
@@ -128,6 +145,28 @@ public class Practice1 {
             hourInString = hour + 12 + "";
         }
         return hourInString + s.substring(2,8);
+    }
+    
+    static int getMinimumCost(int k, int[] c) {
+        int temp = 0;
+        for(int i = 0; i < c.length; i++){
+            for(int j = 0; j< c.length; j++){
+                if(j < c.length-1  && c[j] < c[j+1]){
+                    temp = c[j];
+                    c[j] = c[j+1];
+                    c[j+1] = temp;
+                }
+            }
+        }
+        int previousCount = -1;
+        int totalMinimumCost = 0;
+        for(int i = 0; i<c.length; i++){
+            if(i % k == 0){
+                previousCount++;
+            }
+            totalMinimumCost += (previousCount + 1) * c[i];
+        }
+        return totalMinimumCost;
     }
 }
 
