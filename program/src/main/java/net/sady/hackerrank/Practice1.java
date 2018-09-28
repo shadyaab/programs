@@ -2,16 +2,24 @@ package net.sady.hackerrank;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+
+import javax.swing.RowFilter.ComparisonType;
 
 public class Practice1 {
 	public static void main(String[] args) {
 		
 		//staircase(3);
-		System.out.println(timeConversion("12:01:10PM"));
+		//System.out.println(timeConversion("12:01:10PM"));
+		int a = Integer.MAX_VALUE;
+		System.out.println(a);
 		int [] c =  {2,4,1,5,8,4,2,1};
+		//Arrays.search
+		System.out.println("dsh : " + Arrays.binarySearch(c, 4));
 		Arrays.stream(c)
 			.forEach(System.out::println);
+		
 		System.out.println(c);
 		int temp = 0;
 		for(int i = 0; i < c.length; i++){
@@ -167,6 +175,110 @@ public class Practice1 {
             totalMinimumCost += (previousCount + 1) * c[i];
         }
         return totalMinimumCost;
+    }
+    
+    static int maxMin(int k, int[] arr) {
+        Arrays.sort(arr);
+
+        int result = -1;
+        for(int i = 0; i <= arr.length - k; i++){
+            
+            if(arr[i+k-1]-arr[i] < result || result == -1){
+                result = arr[i+k-1]-arr[i];
+            }
+        }
+        return result;
+    }
+    
+    static int[] jimOrders(int[][] orders) {
+        int [] result = new int [orders.length];
+        int [] deliveryTime = new int[orders.length];
+        for(int i = 0; i < orders.length; i++){
+            deliveryTime[i] = orders[i][0] + orders[i][1];
+            result[i] = i+1;
+        }
+        int temp = 0;
+        for(int i = 0; i< deliveryTime.length; i++){
+            for(int j = 0; j < deliveryTime.length-1; j++){
+                if(deliveryTime[j] > deliveryTime[j+1]){
+                    temp =deliveryTime[j];
+                    deliveryTime[j] = deliveryTime[j+1];
+                    deliveryTime[j+1] = temp;
+
+                    temp = result[j];
+                    result[j] = result[j+1];
+                    result[j+1] = temp;
+                }
+            }
+        }
+        return result;
+    }
+    
+    static String twoArrays(int k, int[] A, int[] B) {
+        Arrays.sort(A);
+        Arrays.sort(B);
+        for(int i = 0; i < A.length; i++){
+            if(!(A[i] + B[B.length-1-i] >= k)){
+                return "NO";
+            }
+        }
+        return "YES";
+    }
+    
+    static int boardCutting(int[] cost_y, int[] cost_x) {
+        int temp = -1;
+        for(int i = 0; i< cost_y.length; i++){
+            for(int j=0; j < cost_y.length -1; j++){
+                if(cost_y[j] < cost_y[j+1]){
+                    temp = cost_y[j];
+                    cost_y[j] = cost_y[j+1];
+                    cost_y[j+1] = temp;
+                }
+            }
+        }
+
+        for(int i = 0; i< cost_x.length; i++){
+            for(int j=0; j < cost_x.length -1; j++){
+                if(cost_x[j] < cost_x[j+1]){
+                    temp = cost_x[j];
+                    cost_x[j] = cost_x[j+1];
+                    cost_x[j+1] = temp;
+                }
+            }
+        }
+
+        int totalCost = 0;
+        int count_y = 0;
+        int count_x = 0;
+        int totalCount = 0;
+        int x = 0;
+        int y = 0;
+        int nextMaxCost = Integer.MIN_VALUE;
+        boolean flag = true;
+        while (totalCount < cost_y.length + cost_x.length){
+            if(count_y < cost_y.length){
+                y = cost_y[count_y];
+            } else {
+                y = -1;
+            }
+            if(count_x < cost_x.length){
+                x = cost_x[count_x];
+            } else {
+                x = -1;
+            }
+
+            if (y >= x ){
+                nextMaxCost = y;
+                totalCost += (count_x + 1) * nextMaxCost;
+                count_y++;
+            } else {
+                nextMaxCost = x;
+                totalCost += (count_y + 1) * nextMaxCost;
+                count_x++;
+            }
+            totalCount++;
+        }
+        return totalCost;
     }
 }
 
