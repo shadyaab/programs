@@ -7,6 +7,10 @@ import java.util.Optional;
 public class FindingMatching {
 	
 	public static void main(String[] args) {
+		short a = (short) 46322;
+		System.out.println(a);
+		
+		
 		List<Dish> menu = Arrays.asList(
 				new Dish("pork", false, 800, Dish.Type.MEAT),
 				new Dish("beef", false, 700, Dish.Type.MEAT),

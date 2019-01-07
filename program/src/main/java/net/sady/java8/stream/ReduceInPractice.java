@@ -9,7 +9,6 @@ public class ReduceInPractice {
 	
 	public static void main(String[] args) {
 	
-		
 		List<Dish> menu = Arrays.asList(
 				new Dish("pork", false, 800, Dish.Type.MEAT),
 				new Dish("beef", false, 700, Dish.Type.MEAT),
@@ -32,9 +31,11 @@ public class ReduceInPractice {
 	}
 
 	private static void sumCalories(List<Dish> menu) {
+		
+		int x=4;
 		int sum =  menu.stream()
 			 	.map(d -> d.getCalories())
-				.reduce(0,(a,b) -> a+b);
+				.reduce(0,(a,b) -> a+b + x);
 	 
 		System.out.println(sum);
 	}
