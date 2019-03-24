@@ -22,6 +22,19 @@ Note:
   - islike-a-relationship: If class is derived as well as inherited.
   - Ex. :  B extends A implement I
 
+
+JavaDocs 
+  - Embed HtMl
+  - doc Tags
+  
+============================================================================================
+Operators 
+===========================================================================================
+# Argument(Non-primitive) in method call is "Pass by Reference".
+# Follows BODMAS rule
+
+
+
 ============================================================================================
 Inheritance 
 ===========================================================================================
