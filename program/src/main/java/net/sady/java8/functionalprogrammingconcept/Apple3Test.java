@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+@FunctionalInterface
 interface ApplePredicate3{
 	boolean test(Apple apple);
 }
