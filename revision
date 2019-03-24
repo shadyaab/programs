@@ -1,0 +1,66 @@
+Access Specifier
+  private  - same class
+  protected - derived class/within same package
+  default - derived class/ any package
+  public - access anywhere.
+  
+Composition 
+  - has a relationship
+  - Creating object in another class.
+  - Ex. :  Car has a Engine
+  
+Aggregation 
+  - dynamic composition
+  
+Association
+  - 
+
+Inheriatance
+  - IS a relationship
+  
+Note: 
+  - islike-a-relationship: If class is derived as well as inherited.
+  - Ex. :  B extends A implement I
+
+
+JavaDocs 
+  - Embed HtMl
+  - doc Tags
+  
+============================================================================================
+Operators 
+===========================================================================================
+# Argument(Non-primitive) in method call is "Pass by Reference".
+# Follows BODMAS rule
+
+
+
+============================================================================================
+Inheritance 
+===========================================================================================
+Overriding 
+  - Same Signature
+  - Covarient return type (Is-a-relationship)
+  - Cannot reduce visibility
+  - Exception 
+      - If super class doesn't declare exception 
+            -> Can't declare any checked exception
+            -> It can declare checked exception.
+      - If super class declare exception 
+            -> Can declare same exception
+            -> Can declare exception lower the hierarchy
+            -> Can choose not to declare any exception 
+  
+Overloading 
+  - Same signature
+  - Return type doesn't matter
+  - Visiblity doesn't matter
+  
+
+  
+  
+
+  
+  
+  
+
