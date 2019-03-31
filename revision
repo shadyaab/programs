@@ -33,11 +33,51 @@ Operators
 # Argument(Non-primitive) in method call is "Pass by Reference".
 # Follows BODMAS rule
 
+long a = 23;     //Valid
+long a = 23l;    //Valid
+long a = 23L;    //Valid
+
+Long a = 23;     //Not Valid
+Long a = 23l;    //Valid
+Long a = 23L;    //Valid
+
+* Same for all others like Double, float...
+
+float f = 1.39 e-43f
+  - It means 1.39 X (10 to the power -43)
+  - Compiler normally takes exponential as Double, so trailing f is required.
+  - In maths it means (1.39 X (e to power -43)). e refer to 2.718
+  - double f1 = 2e2    // 200
+  
+float f1 = 3.2;  // Invalid since 3.2 is double  
+
+if(i1 = i2)     // Invalid  (i1, i2 is int)
+if(b1 = b2)     // Valid    (b1, b2 is boolean)
+
+sizeOf()        //Its not in java since all the data types are same on different machine 
 
 
 ============================================================================================
+Controlling Execution
+============================================================================================
+
+for(int i = 1, j = i + 10; i < 5; i++, j = i * 2) {
+      System.out.println("i = " + i + " j = " + j);
+}
+
+  - Can define multiple variables
+  - It should be of same type
+  - pre increment or post increment doesn't impact
+  
+for(int i : range(10)){
+  System.out.println("i = " + i);
+}
+  - forEach 
+  - Range Automatically generate appropiate array
+
+============================================================================================
 Inheritance 
-===========================================================================================
+============================================================================================
 Overriding 
   - Same Signature
   - Covarient return type (Is-a-relationship)
