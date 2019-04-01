@@ -194,8 +194,20 @@ public class Test1 {
 
 
 ============================================================================================
-Interface
+Interface and Abstract class
 ============================================================================================
+abstract class	
+	- It can have zero or more abstract method.
+	- If one of the method is abstract, class should be abstract
+	- If the implementation class doesn't implement all the abstract method, then this class should be abstract.
+	- Object cannot be created.
+
+interface
+	- 100% abstraction 
+	- field inside interface is implicity static and final
+	- methods are implicitly public
+	- it can extends multiple interface.
+	
 	
 
   
