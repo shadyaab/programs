@@ -1,3 +1,20 @@
+Encapsulation
+  - Wrapping of the data(field) and behaviour(method) into a single unit is called encapsulation
+  - In encapsulation, the variables of a class will be hidden from other classes, 
+      and can be accessed only through the methods of their current class
+  - It is also called data hinding
+  - It is a protective shield that prevents the data from being accessed by the code outside this shield.
+  - Benefits
+      - The fields of a class can be made read-only or write-only.
+      - A class can have total control over what is stored in its fields
+
+Polymorphism
+  - Polymorphism is the ability of an object to take on many forms
+  - Poly mean many and morphs mean form -> polymorphism mean many form
+
+Abstraction
+  - 
+
 Access Specifier
   private  - same class
   protected - derived class/within same package
@@ -16,7 +33,7 @@ Aggregation
 Association
   - 
 
-Inheriatance
+Inheritance
   - IS a relationship
   - It like verionsing the feature of an existing class.
   
@@ -99,12 +116,13 @@ abstract
 
 
 
-
 ============================================================================================
 Inheritance 
 ============================================================================================
 
 * In inheritance, subObject of base class is placed inside the derived class.
+* Overloading works accross scopes
+	i.e. Method in derived class and method is base class with same name can be considered as overloading
 
 Overriding 
   - Same Signature
@@ -126,7 +144,59 @@ Overloading
   
 
   
-  
+============================================================================================
+Polymorphism
+============================================================================================
+Polymorphism is a OOPs concept where one name can have many forms.
+
+Types:
+	- Compile Time (static binding)
+		- Method overloading
+	- Runtime (Dynamic Binding)
+		- Method Overrinding
+
+Upcasting 
+	- Creating an Object of derived class and treating it as a reference to base class.
+
+- Private method cannot be overriden as well as overloaded in Base-Derived Hierarchy
+- Only methods can be polymorphic
+- Variable cannot be polymorphic
+- Static methods doesn't behave polymorphic
+
+* If you upcast, you cant call the new methods(other that it has) in the derived class.
+* Upcast is always safe because the base class cannot have a bigger interface than the derived class.
+* Downcast is not safe
+* ClassCastException is thrown if it is not of the type.
+
+class Base{
+	void m1() {
+		System.out.println("m1 in base");
+	}
+	void m3() {
+		System.out.println("not overriden in Derived class");
+	}
+}
+class Derived extends Base{
+	void m1() {
+		System.out.println("m1 in derived");
+	}
+	void m2() {
+		System.out.println("un overriden");
+	}
+}
+
+public class Test1 {
+	public static void main(String[] args) {
+		Base b = new Derived();
+		b.m2();								// Compilation error (m2 should be available in Base class)
+	}
+}
+
+
+============================================================================================
+Interface
+============================================================================================
+	
 
   
   
