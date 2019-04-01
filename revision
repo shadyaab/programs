@@ -7,6 +7,7 @@ Access Specifier
 Composition 
   - has a relationship
   - Creating object in another class.
+  - It is used when you want to access feature of an existing class.
   - Ex. :  Car has a Engine
   
 Aggregation 
@@ -17,6 +18,7 @@ Association
 
 Inheriatance
   - IS a relationship
+  - It like verionsing the feature of an existing class.
   
 Note: 
   - islike-a-relationship: If class is derived as well as inherited.
@@ -74,10 +76,36 @@ for(int i : range(10)){
 }
   - forEach 
   - Range Automatically generate appropiate array
+  
+============================================================================================
+Keywords
+============================================================================================
+final 
+  - Value cannot be changes once assigned.
+  - if we make reference as final, we cannnot change the reference and point to other object but the values of the Object can be 
+    modified.
+  - Value can be assing in final varible in two places
+      1. When is declared.
+      2. In constructor
+  - We can declare final in the method argument
+  - Any private member is implicitly final.
+  - If used with class  -> Class cannot be extended.
+  - If used with metohd -> Method cannot be overriden
+  - If used with variable -> Value/Reference cannnot be changed.
+  
+abstract
+  - 
+
+
+
+
 
 ============================================================================================
 Inheritance 
 ============================================================================================
+
+* In inheritance, subObject of base class is placed inside the derived class.
+
 Overriding 
   - Same Signature
   - Covarient return type (Is-a-relationship)
