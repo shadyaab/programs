@@ -208,6 +208,24 @@ interface
 	- methods are implicitly public
 	- it can extends multiple interface.
 	
+* Interface can only extends another interface not implements it.
+	
+Scenario:
+1. If you have interface having some abstract method and another class having implementation of method in 
+   that interface (Though it doesn't implements interface). 
+       And in the Implentation class which extends Class and implements that interface, methods in the interface
+       need not to define in it.
+       	    Since the defination is present in the class.
+
+Interface vs Abstract class
+    - Interface is used when one want method with no defination as well as no member variable.
+    - Interface is used when you want a class to implements multiple interface.
+    
+    - Abstract class is prefer where you want method defination as well as abstract method
+    - Abstract class is prefer when you want some member variables.
+	    
+	    
+	
 	
 
   
