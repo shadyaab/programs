@@ -266,11 +266,16 @@ Non-Static Nested Class
 		- Member inner class can be final as well abstract but not both.
 		
 	Local Inner Class	
+		- It is the class declared inside a method or block.
+		- It can't be static. This is nothing but a local variable and local variable can't be static.
+		- It can't have static members. But it can have field which static and final both.
+		- It can't be access from outside the method or block where it is defined.
+		- It can be accessed within the method itself.
+		- It can't be declare with access modifier i.e. private, protected, public.
+		- Only final local variable inside the method or block can be accessed from within the local inner class in the same method.
+		- It can be final or abstract but not both.
 		- 
 	
-
-
-
 
 
 
