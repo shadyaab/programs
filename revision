@@ -224,9 +224,55 @@ Interface vs Abstract class
     - Abstract class is prefer where you want method defination as well as abstract method
     - Abstract class is prefer when you want some member variables.
 	    
+* Fields defined in inteface should not be blank final. Value should be assigned when declared.
+* Inteface can be private if it is nested within the class.
+* Interface cannot be private if it is nested within the another interface.
 	    
+TODO : Name collision in interface	
+
+============================================================================================
+Inner Class
+============================================================================================
+Nested Class  Type:
+	- Static nested class
+	- Non-static nested class
+
+Static Nested Class	
+	- Static nested class can contain both static and non static member
+	- We can access only static member of outer static class inside nested static class.
+			- We cannot access non-static member
+	- Static nested class can be abstract and final
+	- Access to nested static class methods (Same will be for fields)
+		~ OuterClass.InnerClass.method()      			//Access to static method
+		~ new OuterClass.InnerClass().method()			//Access to non-static method.
+	- For each nested class separate .class file will be genereted (Ex- OuterClass$NestedClass.class)
 	
+Non-Static Nested Class 
+	- Also called inner Class
+	- Types 
+		~ Member Inner class
+		~ Local Inner Class
+		~ Anonymours Inner Class
+		
+	Member Inner Class 
+		- It must only contains non-static members. (Static members are not allowed)
+		- Static field is allowed only if it is final. And it should be initialized at time of declaration
+			~ static methods are not allowed even if it is final
+		- Its should not contain static block.
+		- Both static and non-static member of Outer class can be access 
+		- How to Access
+			~ new OuterClass().new InnerClass().method();
+		- All member of outer class can be accessed in inner class and vice versa irrespective of access specifier(visibility).
+		- Member inner class can be final as well abstract but not both.
+		
+	Local Inner Class	
+		- 
 	
+
+
+
+
+
 
   
   
