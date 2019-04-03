@@ -1,1 +1,74 @@
-Spring
+Source - https://howtodoinjava.com/spring-core/
+
+Spring Ioc Container
+	- It create object, wire them toogether, configure them and manages their complete life cycle 
+	    from creation to destruction
+	- Container Type
+		~ BeanFactory Container
+		~ ApplicationContext container
+		
+	BeanFactory Container
+		- In simple term BeanFactory is a container that manages Object.
+		- A BeanFactory is essentially nothing more than the interface for an advanced factory 
+		    capable of maintaining a registry of different beans and their dependencies
+		- The BeanFactory enables you to read bean definitions and access them using the bean factory
+			
+	ApplicationContext Container
+		- It built on top of BeanFactory and it contains other functionality like
+			~ easier integration with Spring’s AOP features
+			~ message resource handling
+			~ event propagation
+			~ application-layer specific contexts
+		- The ApplicationContext provides:
+			~ Bean factory methods for accessing application components.
+			~ The ability to load file resources in a generic fashion.
+			~ The ability to publish events to registered listeners.
+			~ The ability to resolve messages to support internationalization.
+			~ Inheritance from a parent context.
+		- ApplicationContext implementations
+			~ FileSystemXmlApplicationContext
+			~ ClassPathXmlApplicationContext
+			~ WebXmlApplicationContext
+
+Dependency Injection
+	- It's a design pattern which removes dependency from the code, so that it can be managed easily.
+	- It makes our code lousely coupled.
+	
+DI vs IoC
+	- Ioc is a design paradigm which give more control to the target component of your application, the one getting work done.
+	- DI is a design pattern used to create instance of object that other object rely on without knowing at compile time.
+	- IoC relies on DI.
+	
+Creation of Bean
+	- Using constructor
+		~ <bean id="exampleBean"/>
+		~ Just specifying the bean class should be enough
+		
+	- Using static factory methods
+		~ <bean id="exampleBean" factory-method="createInstance"/>
+		~ should have factory method in the class for which the bean is being created.
+		
+	- using instance factory method
+		~ <bean id="myFactoryBean"  class="...">
+		  <bean id="exampleBean"  factory-bean="myFactoryBean" factory-method="createInstance"></bean>
+		~ instantiation using an instance factory method is where the factory method of an existing 
+		   bean from the container is invoked to create the new bean.
+		   
+Dependency Injection
+	- Setter Injection
+	- Constructor Injection
+	- Interface Injection
+	
+	Constructor Injection
+		- 
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
