@@ -275,7 +275,62 @@ Non-Static Nested Class
 		- It can't be declare with access modifier i.e. private, protected, public.
 		- Only final local variable inside the method or block can be accessed from within the local inner class in the same method.
 		- It can be final or abstract but not both.
-		- 
+		
+	Anonymous Inner Class
+		- As name suggest class without name
+		- Only one object can be created. 
+		- When you are creating anonymous inner class you are actually creating a sub class 
+			to a class which needs to be modified.
+		- While creating an anonymous inner class you are also creating an object to that subclass
+		- Using anonymous inner class, you can implement both abstract classes and interfaces.
+			~ it doesn't required keyword extends or implements
+
+Variable hiding or shadowing
+	- A variable is hidden or shadowed, if there is another variable exist with the same name in the nearer scope.
+	- If sub class has variables with the same name as that of super class, it hides or shadows super class variable
+	- If inner class has a variable with the same name as that of an outer class, then it hides or shadows outer class variable
+		~ OuterClassName.this.variableName can be used to access non static field
+		~ OuterClassName.variableName can be used to access static fields
+		
+Inheritance of Inner class
+	- One inner class can extend another inner class of the same class.
+	- An inner class can be extended by another class outside of it’s outer class
+		~ If you are extending static inner class (Static nested class), then it is a straight forward implementation
+		~ If you are extending non-static inner class, then sub class constructor must explicitly call super class 
+		   constructor using an instance of outer class. 
+		   Because, you can’t access non-static inner class without the instance of outer class.
+		class OuterClass
+		{
+			static class InnerClassOne
+			{
+				//Class as a static member
+			}
+			class InnerClassTwo
+			{
+				//Class as a non-static member
+			}
+		}
+ 
+		//Extending Static inner class or static nested class
+		class AnotherClassOne extends OuterClass.InnerClassOne
+		{
+			//static nested class can be referred by outer class name,
+		}
+ 
+		//Extending non-static inner class or member inner class
+		class AnotherClassTwo extends OuterClass.InnerClassTwo
+		{
+			public AnotherClassTwo()
+			{
+				new OuterClass().super();  //accessing super class constructor through OuterClass instance
+			}
+		}
+	
+	- Inner class can extend it’s outer class
+		~ it does not serve any meaning
+		~ Because, even the private members of outer class are available inside the inner class
+		
+		   
 	
 
 
