@@ -1,0 +1,816 @@
+Spring Framework - 5.1.4
+
+	- Spring makes it easy to create Java enterprise applications. It provides everything you need to embrace the Java 
+		language in an enterprise environment
+	- The Spring Framework is divided into modules. Applications can choose which modules they need. At the heart are the 
+		modules of the core container, including a configuration model and a dependency injection mechanism. Beyond that, 
+		the Spring Framework provides foundational support for different application architectures, including messaging, 
+		transactional data and persistence, and web. It also includes the Servlet-based Spring MVC web framework and, in 
+		parallel, the Spring WebFlux reactive web framework.
+	- Over time, the role of Java EE in application development has evolved. In the early days of Java EE and Spring, 
+		applications were created to be deployed to an application server. Today, with the help of Spring Boot, applications 
+		are created in a devops- and cloud-friendly way, with the Servlet container embedded and trivial to change. 
+		As of Spring Framework 5, a WebFlux application does not even use the Servlet API directly and can run on 
+		servers (such as Netty) that are not Servlet containers.
+
+- The IoC Container (Inversion of Control)
+	- IoC is also known as dependency injection (DI)
+	- It is a process whereby objects define their dependencies (that is, the other objects they work with) only through 
+		constructor arguments, arguments to a factory method, or properties that are set on the object instance after it is 
+		constructed or returned from a factory method. 
+	- The container then injects those dependencies when it creates the bean. 
+	- This process is fundamentally the inverse (hence the name, Inversion of Control) of the bean itself controlling the 
+		instantiation or location of its dependencies by using direct construction of classes or a mechanism such as the 
+		Service Locator pattern.
+	- The 
+			org.springframework.beans and 
+			org.springframework.context 
+		packages are the basis for Spring Framework’s IoC container.
+	
+	BeanFactory
+		- The BeanFactory interface provides an advanced configuration mechanism capable of managing any type of object. 
+		- ApplicationContext is a sub-interface of BeanFactory.
+		- In short, the BeanFactory provides the configuration framework and basic functionality, and the ApplicationContext 
+			adds more enterprise-specific functionality. The ApplicationContext is a complete superset of the BeanFactory
+	
+	Beans
+		- In Spring, the objects that form the backbone of your application and that are managed by the Spring IoC container 
+			are called beans.
+		- A bean is an object that is instantiated, assembled, and otherwise managed by a Spring IoC container. 
+		- Otherwise, a bean is simply one of many objects in your application. 
+		- Beans, and the dependencies among them, are reflected in the configuration metadata used by a container.
+		
+		
+	Container Overview
+		- The org.springframework.context.ApplicationContext interface represents the Spring IoC container and is responsible 
+			for instantiating, configuring, and assembling the beans.
+		- The container gets its instructions on what objects to instantiate, configure, and assemble by reading configuration 
+			metadata. 
+		- The configuration metadata is represented in 
+			1. XML, 
+			2. Java annotations, or 
+			3. Java code. 
+		  It lets you express the objects that compose your application and the rich interdependencies between those objects.
+		
+	Configuration Metadata
+		- Spring IoC container consumes a form of configuration metadata.
+		- This configuration metadata represents how you, as an application developer, tell the Spring container to instantiate, 
+			configure, and assemble the objects in your application.
+			
+			XML based configuration
+				- Configuration metadata is traditionally supplied in a simple and intuitive XML format
+			Annotation based configuration
+				- Spring 2.5 introduced support for annotation-based configuration metadata
+			Java-based configuration
+				- Starting with Spring 3.0, many features provided by the Spring JavaConfig project became part of the core 
+					Spring Framework. Thus, you can define beans external to your application classes by using Java rather 
+					than XML files.
+		- Spring configuration consists of at least one and typically more than one bean definition that the container must 
+			manage. 
+			
+			XML-based 
+				- XML-based configuration metadata configures these beans as <bean/> elements inside a top-level <beans/> 
+				element. 
+			Java-based
+				- Java configuration typically uses @Bean-annotated methods within a @Configuration class.
+
+			These bean definitions correspond to the actual objects that make up your application. 
+			Typically, you define service layer objects, data access objects (DAOs), presentation objects etc.
+			
+	Bean Overview
+		- A Spring IoC container manages one or more beans. These beans are created with the configuration metadata that you 
+			supply to the container (for example, in the form of XML <bean/> definitions).
+		
+		Naming Beans
+			- Every bean has one or more identifiers. These identifiers must be unique within the container that hosts the bean. 
+				A bean usually has only one identifier. However, if it requires more than one, the extra ones can be considered 
+				aliases.
+	
+	Instantiating Beans
+		- A bean definition is essentially a recipe for creating one or more objects. The container looks at the recipe for a 
+			named bean when asked and uses the configuration metadata encapsulated by that bean definition to create 
+			(or acquire) an actual object.
+		- If you use XML-based configuration metadata, you specify the type (or class) of object that is to be instantiated in 
+			the class attribute of the <bean/> element.
+Dependencies
+	Dependency Injection
+		- Dependency injection (DI) is a process whereby objects define their dependencies (that is, the other objects with 
+			which they work) only through constructor arguments, arguments to a factory method, or properties that are set on 
+			the object instance after it is constructed or returned from a factory method. 
+		- The container then injects those dependencies when it creates the bean. This process is fundamentally the inverse 
+			(hence the name, Inversion of Control) of the bean itself controlling the instantiation or location of its 
+			dependencies on its own by using direct construction of classes or the Service Locator pattern.
+		- Code is cleaner with the DI principle, and decoupling is more effective when objects are provided with their 
+			dependencies. The object does not look up its dependencies and does not know the location or class of the 
+			dependencies. As a result, your classes become easier to test, particularly when the dependencies are on 
+			interfaces or abstract base classes, which allow for stub or mock implementations to be used in unit tests.
+			
+		- DI exists in two major variants: 
+			- Constructor-based dependency injection and 
+			- Setter-based dependency injection
+		
+		Constructor-based Dependency Injection
+			- Constructor-based DI is accomplished by the container invoking a constructor with a number of arguments, 
+				each representing a dependency. 
+			- Calling a static factory method with specific arguments to construct the bean is nearly equivalent, and 
+				this discussion treats arguments to a constructor and to a static factory method similarly. 
+			- The following example shows a class that can only be dependency-injected with constructor injection:
+				
+				public class SimpleMovieLister {
+					// the SimpleMovieLister has a dependency on a MovieFinder
+					private MovieFinder movieFinder;
+					// a constructor so that the Spring container can inject a MovieFinder
+					public SimpleMovieLister(MovieFinder movieFinder) {
+						this.movieFinder = movieFinder;
+					}
+					// business logic that actually uses the injected MovieFinder is omitted...
+				}
+			
+			Constructor Argument Resolution
+				- Constructor argument resolution matching occurs by using the argument’s type. If no potential ambiguity 
+					exists in the constructor arguments of a bean definition, the order in which the constructor arguments are 
+					defined in a bean definition is the order in which those arguments are supplied to the appropriate 
+					constructor when the bean is being instantiated.
+		
+		Setter-based Dependency Injection		
+			- Setter-based DI is accomplished by the container calling setter methods on your beans after invoking 
+				a no-argument constructor or a no-argument static factory method to instantiate your bean.
+			- The following example shows a class that can only be dependency-injected by using pure setter injection.
+				
+				public class SimpleMovieLister {
+					// the SimpleMovieLister has a dependency on the MovieFinder
+					private MovieFinder movieFinder;
+					// a setter method so that the Spring container can inject a MovieFinder
+					public void setMovieFinder(MovieFinder movieFinder) {
+						this.movieFinder = movieFinder;
+					}
+					// business logic that actually uses the injected MovieFinder is omitted...
+				}
+			- The ApplicationContext supports constructor-based and setter-based DI for the beans it manages. 
+				It also supports setter-based DI after some dependencies have already been injected through the constructor 
+				approach. 
+
+		Constructor-based or setter-based DI?
+			- Since you can mix constructor-based and setter-based DI, it is a good rule of thumb to use constructors 
+				for mandatory dependencies and setter methods or configuration methods for optional dependencies. 
+
+		Dependency Resolution Process
+			- The container performs bean dependency resolution as follows:
+			- The ApplicationContext is created and initialized with configuration metadata that describes all the beans. 
+				Configuration metadata can be specified by XML, Java code, or annotations.
+			- For each bean, its dependencies are expressed in the form of properties, constructor arguments, or arguments to 
+				the static-factory method( if you use that instead of a normal constructor). These dependencies are provided 
+				to the bean, when the bean is actually created.
+			- Each property or constructor argument is an actual definition of the value to set, or a reference to another 
+				bean in the container.
+			- Each property or constructor argument that is a value is converted from its specified format to the actual type 
+				of that property or constructor argument. By default, Spring can convert a value supplied in string format to 
+				all built-in types, such as int, long, String, boolean, and so forth.
+		
+		Lazy-initialized Beans
+			- By default, ApplicationContext implementations eagerly create and configure all singleton beans as part of the 
+				initialization process. Generally, this pre-instantiation is desirable, because errors in the configuration 
+				or surrounding environment are discovered immediately, as opposed to hours or even days later. 
+				When this behavior is not desirable, you can prevent pre-instantiation of a singleton bean by marking the bean 
+				definition as being lazy-initialized. A lazy-initialized bean tells the IoC container to create a bean 
+				instance when it is first requested, rather than at startup.
+			- In XML, this behavior is controlled by the lazy-init attribute on the <bean/> element, as the following example 
+				shows:
+
+					<bean id="lazy" class="com.something.ExpensiveToCreateBean" lazy-init="true"/>
+					<bean name="not.lazy" class="com.something.AnotherBean"/>
+				
+					- When the preceding configuration is consumed by an ApplicationContext, the lazy bean is not eagerly 
+						pre-instantiated when the ApplicationContext starts, whereas the not.lazy bean is eagerly 
+						pre-instantiated.
+			- You can also control lazy-initialization at the container level by using the default-lazy-init attribute on the 
+				<beans/> element, the following example shows:
+
+					<beans default-lazy-init="true">
+						<!-- no beans will be pre-instantiated... -->
+					</beans>
+		
+		Autowiring Collaborators
+			- The Spring container can autowire relationships between collaborating beans. You can let Spring resolve 
+				collaborators (other beans) automatically for your bean by inspecting the contents of the ApplicationContext. 
+				Autowiring has the following advantages:
+					- Autowiring can significantly reduce the need to specify properties or constructor arguments. 
+					- Autowiring can update a configuration as your objects evolve. For example, if you need to add a dependency to a 
+						class, that dependency can be satisfied automatically without you needing to modify the configuration. 
+						Thus autowiring can be especially useful during development, without negating the option of switching to 
+						explicit wiring when the code base becomes more stable.
+			
+			Autowiring modes
+				1. no
+					(Default) No autowiring. Bean references must be defined by ref elements. Changing the default setting is 
+						not recommended for larger deployments, because specifying collaborators explicitly gives greater 
+						control and clarity. To some extent, it documents the structure of a system.
+				2. byName
+					Autowiring by property name. Spring looks for a bean with the same name as the property that needs to be 
+						autowired. For example, if a bean definition is set to autowire by name and it contains a master 
+						property (that is, it has a setMaster(..) method), Spring looks for a bean definition named master and 
+						uses it to set the property.
+				3. byType
+					Lets a property be autowired if exactly one bean of the property type exists in the container. If more than 
+						one exists, a fatal exception is thrown, which indicates that you may not use byType autowiring for that 
+						bean. If there are no matching beans, nothing happens (the property is not set).
+				4. constructor
+					Analogous to byType but applies to constructor arguments. If there is not exactly one bean of the 
+						constructor argument type in the container, a fatal error is raised.
+
+			- Excluding a Bean from Autowiring
+				On a per-bean basis, you can exclude a bean from autowiring. In Spring’s XML format, set the autowire-candidate 
+					attribute of the <bean/> element to false. The container makes that specific bean definition unavailable to the 
+					autowiring infrastructure (including annotation style configurations such as @Autowired).
+	Bean Scopes
+		- When you create a bean definition, you create a recipe for creating actual instances of the class defined by that 
+			bean definition. The idea that a bean definition is a recipe is important, because it means that, as with a class, 
+			you can create many object instances from a single recipe.
+
+		- You can control not only the various dependencies and configuration values that are to be plugged into an object 
+			that is created from a particular bean definition but also control the scope of the objects created from a 
+			particular bean definition. This approach is powerful and flexible, because you can choose the scope of the 
+			objects you create through configuration instead of having to bake in the scope of an object at the Java class level. 
+		- Beans can be defined to be deployed in one of a number of scopes. The Spring Framework supports six scopes, 
+			four of which are available only if you use a web-aware ApplicationContext. You can also create a custom scope.
+			
+		singleton
+			- (Default) Scopes a single bean definition to a single object instance for each Spring IoC container.
+
+		prototype
+			- Scopes a single bean definition to any number of object instances.
+
+		request
+			- Scopes a single bean definition to the lifecycle of a single HTTP request. That is, each HTTP request has its 
+				own instance of a bean created off the back of a single bean definition. Only valid in the context of a 
+				web-aware Spring ApplicationContext.
+
+		session
+			- Scopes a single bean definition to the lifecycle of an HTTP Session. Only valid in the context of a web-aware 
+				Spring ApplicationContext.
+
+		application
+			- Scopes a single bean definition to the lifecycle of a ServletContext. Only valid in the context of a web-aware 
+				Spring ApplicationContext.
+
+		websocket
+			- Scopes a single bean definition to the lifecycle of a WebSocket. Only valid in the context of a web-aware 
+				Spring ApplicationContext.	
+		
+		The Singleton Scope
+			- Only one shared instance of a singleton bean is managed, and all requests for beans with an ID or IDs that match 
+				that bean definition result in that one specific bean instance being returned by the Spring container.
+
+			- To put it another way, when you define a bean definition and it is scoped as a singleton, the Spring IoC container 
+				creates exactly one instance of the object defined by that bean definition. This single instance is stored in a 
+				cache of such singleton beans, and all subsequent requests and references for that named bean return the cached 
+				object.
+			
+			-  The scope of the Spring singleton is best described as being per-container and per-bean. 
+				This means that, if you define one bean for a particular class in a single Spring container, the Spring 
+				container creates one and only one instance of the class defined by that bean definition. 
+				
+			- The singleton scope is the default scope in Spring. To define a bean as a singleton in XML, you can define a 
+				bean as shown in the following example:
+
+				<bean id="accountService" class="com.something.DefaultAccountService"/>
+				
+				<!-- the following is equivalent, though redundant (singleton scope is the default) -->
+				<bean id="accountService" class="com.something.DefaultAccountService" scope="singleton"/>
+		
+		The Prototype Scope
+			- The non-singleton prototype scope of bean deployment results in the creation of a new bean instance every time a 
+				request for that specific bean is made. That is, the bean is injected into another bean or you request it 
+				through a getBean() method call on the container. As a rule, you should use the prototype scope for all 
+				stateful beans and the singleton scope for stateless beans.
+			- In contrast to the other scopes, Spring does not manage the complete lifecycle of a prototype bean. 
+				The container instantiates, configures, and otherwise assembles a prototype object and hands it to the client, 
+				with no further record of that prototype instance. Thus, although initialization lifecycle callback methods 
+				are called on all objects regardless of scope, in the case of prototypes, configured destruction lifecycle 
+				callbacks are not called. The client code must clean up prototype-scoped objects and release expensive 
+				resources that the prototype beans hold. To get the Spring container to release resources held by 
+				prototype-scoped beans, try using a custom bean post-processor, which holds a reference to beans that need to 
+				be cleaned up.
+			- In some respects, the Spring container’s role in regard to a prototype-scoped bean is a replacement for the 
+				Java new operator. All lifecycle management past that point must be handled by the client.
+				
+			- e.g.,
+				<bean id="accountService" class="com.something.DefaultAccountService" scope="prototype"/>
+			
+		Singleton Beans with Prototype-bean Dependencies
+			- When you use singleton-scoped beans with dependencies on prototype beans, be aware that dependencies are 
+				resolved at instantiation time. Thus, if you dependency-inject a prototype-scoped bean into a singleton-scoped 
+				bean, a new prototype bean is instantiated and then dependency-injected into the singleton bean. 
+				The prototype instance is the sole instance that is ever supplied to the singleton-scoped bean.
+			- However, suppose you want the singleton-scoped bean to acquire a new instance of the prototype-scoped bean 
+				repeatedly at runtime. You cannot dependency-inject a prototype-scoped bean into your singleton bean, because 
+				that injection occurs only once, when the Spring container instantiates the singleton bean and resolves and 
+				injects its dependencies.
+			
+		Request, Session, Application, and WebSocket Scopes
+			- The request, session, application, and websocket scopes are available only if you use a web-aware Spring 
+				ApplicationContext implementation (such as XmlWebApplicationContext). If you use these scopes with regular 
+				Spring IoC containers, such as the ClassPathXmlApplicationContext, an IllegalStateException that complains 
+				about an unknown bean scope is thrown.
+			
+			Request scope
+				- Consider the following XML configuration for a bean definition:
+				- e.g.,
+					<bean id="loginAction" class="com.something.LoginAction" scope="request"/>
+				
+					The Spring container creates a new instance of the LoginAction bean by using the loginAction bean 
+						definition for each and every HTTP request. That is, the loginAction bean is scoped at the HTTP 
+						request level.
+				- When using annotation-driven components or Java configuration, the @RequestScope annotation can be used to 
+					assign a component to the request scope. The following example shows how to do so:
+
+					@RequestScope
+					@Component
+					public class LoginAction {
+						// ...
+					}
+			
+			Session Scope
+				- Consider the following XML configuration for a bean definition:
+				- e.g.,
+					<bean id="userPreferences" class="com.something.UserPreferences" scope="session"/>
+
+					The Spring container creates a new instance of the UserPreferences bean by using the userPreferences bean 
+						definition for the lifetime of a single HTTP Session. In other words, the userPreferences bean is 
+						effectively scoped at the HTTP Session level.
+				- When using annotation-driven components or Java configuration, you can use the @SessionScope annotation to 
+					assign a component to the session scope.
+
+					@SessionScope
+					@Component
+					public class UserPreferences {
+						// ...
+					}
+					
+			Application Scope
+				- Consider the following XML configuration for a bean definition:
+				- e.g.,
+					<bean id="appPreferences" class="com.something.AppPreferences" scope="application"/>
+					
+					The Spring container creates a new instance of the AppPreferences bean by using the appPreferences bean 
+						definition once for the entire web application. That is, the appPreferences bean is scoped at the 
+						ServletContext level and stored as a regular ServletContext attribute. This is somewhat similar to a 
+						Spring singleton bean but differs in two important ways: It is a singleton per ServletContext, not per 
+						Spring 'ApplicationContext' (for which there may be several in any given web application), and it is 
+						actually exposed and therefore visible as a ServletContext attribute.
+				- When using annotation-driven components or Java configuration, you can use the @ApplicationScope annotation 
+					to assign a component to the application scope. The following example shows how to do so:
+
+						@ApplicationScope
+						@Component
+						public class AppPreferences {
+							// ...
+						}
+			
+		Creating a Custom Scope
+			- To integrate your custom scopes into the Spring container, you need to implement the 
+				org.springframework.beans.factory.config.Scope interface
+		
+		Customizing the Nature of a Bean
+			- The Spring Framework provides a number of interfaces you can use to customize the nature of a bean. This section 
+				groups them as follows:
+				
+				- Lifecycle Callbacks
+				- ApplicationContextAware and BeanNameAware
+				- Other Aware Interfaces
+			
+			Lifecycle Callbacks
+				Initialization Callbacks
+					- We suggest using the @PostConstruct annotation or specifying a POJO initialization method. 
+						In the case of XML-based configuration metadata, you can use the init-method attribute to specify the 
+						name of the method that has a void no-argument signature. With Java configuration, you can use the 
+						initMethod attribute of @Bean.
+						
+					- e.g.,
+						<bean id="exampleInitBean" class="examples.ExampleBean" init-method="init"/>
+						
+				Destruction Callbacks
+					- we suggest using the @PreDestroy annotation or specifying a generic method that is supported by bean 
+						definitions. With XML-based configuration metadata, you can use the destroy-method attribute on the 
+						<bean/>. With Java configuration, you can use the destroyMethod attribute of @Bean.
+					
+					- e.g.,
+						<bean id="exampleInitBean" class="examples.ExampleBean" destroy-method="cleanup"/>
+				
+				
+				
+	Annotation-based Container Configuration
+		- Due to the way they are defined, annotations provide a lot of context in their declaration, leading to shorter and 
+			more concise configuration. However, XML excels at wiring up components without touching their source code or 
+			recompiling them.
+		- An alternative to XML setup is provided by annotation-based configuration, which relies on the bytecode metadata for 
+			wiring up components instead of angle-bracket declarations. Instead of using XML to describe a bean wiring, the 
+			developer moves the configuration into the component class itself by using annotations on the relevant class, 
+			method, or field declaration.
+		- Annotation injection is performed before XML injection. Thus, the XML configuration overrides the annotations for 
+			properties wired through both approaches.
+		- As always, you can register them as individual bean definitions, but they can also be implicitly registered by 
+			including the following tag in an XML-based Spring configuration (notice the inclusion of the context namespace):
+			------------------------------------------------------------------------------
+			<?xml version="1.0" encoding="UTF-8"?>
+			<beans xmlns="http://www.springframework.org/schema/beans"
+				xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+				xmlns:context="http://www.springframework.org/schema/context"
+				xsi:schemaLocation="http://www.springframework.org/schema/beans
+					http://www.springframework.org/schema/beans/spring-beans.xsd
+					http://www.springframework.org/schema/context
+					http://www.springframework.org/schema/context/spring-context.xsd">
+
+				<context:annotation-config/>
+
+			</beans>
+			------------------------------------------------------------------------------
+			
+			- <context:annotation-config/> only looks for annotations on beans in the same application context in which it is 
+				defined. This means that, if you put <context:annotation-config/> in a WebApplicationContext for a 
+				DispatcherServlet, it only checks for @Autowired beans in your controllers, and not your services.
+				
+		- @Required
+			- The @Required annotation applies to bean property setter methods, as in the following example:
+			- public class SimpleMovieLister {
+				private MovieFinder movieFinder;
+				@Required
+				public void setMovieFinder(MovieFinder movieFinder) {
+					this.movieFinder = movieFinder;
+				}
+				// ...
+			}
+			- This annotation indicates that the affected bean property must be populated at configuration time, through an 
+				explicit property value in a bean definition or through autowiring. 
+			- The container throws an exception if the affected bean property has not been populated. 
+			- This allows for eager and explicit failure, avoiding NullPointerException instances or the like later on.
+			
+		- @Autowired
+			- You can apply the @Autowired annotation to constructors, as the following example shows:
+			
+			public class MovieRecommender {
+				private final CustomerPreferenceDao customerPreferenceDao;
+				@Autowired
+				public MovieRecommender(CustomerPreferenceDao customerPreferenceDao) {
+					this.customerPreferenceDao = customerPreferenceDao;
+				}
+				// ...
+			}
+			- You can also apply the @Autowired annotation to “traditional” setter methods, as the following example shows:
+
+			public class SimpleMovieLister {
+				private MovieFinder movieFinder;
+				@Autowired
+				public void setMovieFinder(MovieFinder movieFinder) {
+					this.movieFinder = movieFinder;
+				}
+				// ...
+			}
+			
+			- You can also apply the annotation to methods with arbitrary names and multiple arguments, as the following example shows:
+
+				public class MovieRecommender {
+					private MovieCatalog movieCatalog;
+					private CustomerPreferenceDao customerPreferenceDao;
+					@Autowired
+					public void prepare(MovieCatalog movieCatalog,
+							CustomerPreferenceDao customerPreferenceDao) {
+						this.movieCatalog = movieCatalog;
+						this.customerPreferenceDao = customerPreferenceDao;
+					}
+					// ...
+				}
+			- You can apply @Autowired to fields as well and even mix it with constructors, as the following example shows:
+
+				public class MovieRecommender {
+					private final CustomerPreferenceDao customerPreferenceDao;
+					@Autowired
+					private MovieCatalog movieCatalog;
+					@Autowired
+					public MovieRecommender(CustomerPreferenceDao customerPreferenceDao) {
+						this.customerPreferenceDao = customerPreferenceDao;
+					}
+					// ...
+				}
+		Automatically Detecting Classes and Registering Bean Definitions
+			- Spring can automatically detect stereotyped classes and register corresponding BeanDefinition instances with 
+				the ApplicationContext. 
+			- For example, the following two classes are eligible for such autodetection:
+
+				@Service
+				public class SimpleMovieLister {
+					private MovieFinder movieFinder;
+					@Autowired
+					public SimpleMovieLister(MovieFinder movieFinder) {
+						this.movieFinder = movieFinder;
+					}
+				}
+				
+				@Repository
+				public class JpaMovieFinder implements MovieFinder {
+					// implementation elided for clarity
+				}
+		
+			- To autodetect these classes and register the corresponding beans, you need to add @ComponentScan to your 
+				@Configuration class, where the basePackages attribute is a common parent package for the two classes. 
+				(Alternatively, you can specify a comma- or semicolon- or space-separated list that includes the parent 
+				package of each class.)
+
+					@Configuration
+					@ComponentScan(basePackages = "org.example")
+					public class AppConfig  {
+						...
+					}
+			
+			Fine-tuning Annotation-based Autowiring with @Primary
+				- Because autowiring by type may lead to multiple candidates, it is often necessary to have more control over 
+					the selection process. One way to accomplish this is with Spring’s @Primary annotation. 
+				- @Primary indicates that a particular bean should be given preference when multiple beans are candidates to be 
+					autowired to a single-valued dependency. If exactly one primary bean exists among the candidates, it becomes 
+					the autowired value.
+					
+				e.g.,
+					<bean class="example.SimpleMovieCatalog" primary="true">
+						<!-- inject any dependencies required by this bean -->
+					</bean>
+			
+			Fine-tuning Annotation-based Autowiring with Qualifiers
+				- @Primary is an effective way to use autowiring by type with several instances when one primary candidate can 
+					be determined. When you need more control over the selection process, you can use Spring’s @Qualifier 
+					annotation. You can associate qualifier values with specific arguments, narrowing the set of type matches 
+					so that a specific bean is chosen for each argument. 
+			
+		Classpath Scanning and Managed Components
+			- Most examples in this chapter use XML to specify the configuration metadata that produces each BeanDefinition 
+				within the Spring container. The previous section (Annotation-based Container Configuration) demonstrates how 
+				to provide a lot of the configuration metadata through source-level annotations. Even in those examples, 
+				however, the “base” bean definitions are explicitly defined in the XML file, while the annotations drive only 
+				the dependency injection. This section describes an option for implicitly detecting the candidate components 
+				by scanning the classpath. Candidate components are classes that match against a filter criteria and have a 
+				corresponding bean definition registered with the container. This removes the need to use XML to perform bean 
+				registration. Instead, you can use annotations (for example, @Component), AspectJ type expressions, or your 
+				own custom filter criteria to select which classes have bean definitions registered with the container.
+			- Starting with Spring 3.0, many features provided by the Spring JavaConfig project are part of the core 
+				Spring Framework. This allows you to define beans using Java rather than using the traditional XML files.
+			
+			- Spring provides further stereotype annotations: @Component, @Service, and @Controller. 
+			
+			- @Component is a generic stereotype for any Spring-managed component. 
+			- @Repository, @Service, and @Controller are specializations of @Component for more specific use cases 
+				(in the persistence, service, and presentation layers, respectively). 
+				Therefore, you can annotate your component classes with @Component, but, by annotating them with 
+				@Repository, @Service, or @Controller instead, your classes are more properly suited for processing by tools 
+				or associating with aspects.
+			- Many of the annotations provided by Spring can be used as meta-annotations in your own code. 
+				A meta-annotation is an annotation that can be applied to another annotation.
+			- You can also combine meta-annotations to create “composed annotations”. 
+				For example, the @RestController annotation from Spring MVC is composed of @Controller and @ResponseBody.
+			
+		Automatically Detecting Classes and Registering Bean Definitions
+			- Spring can automatically detect stereotyped classes and register corresponding BeanDefinition instances with the 
+				ApplicationContext. For example, the following two classes are eligible for such autodetection:	
+				
+				e.g.,
+					@Service
+					public class SimpleMovieLister {
+
+						private MovieFinder movieFinder;
+
+						@Autowired
+						public SimpleMovieLister(MovieFinder movieFinder) {
+							this.movieFinder = movieFinder;
+						}
+					}
+					
+				e.g.,
+					@Repository
+					public class JpaMovieFinder implements MovieFinder {
+						// implementation elided for clarity
+					}
+			- To autodetect these classes and register the corresponding beans, you need to add @ComponentScan to your 
+				@Configuration class, where the basePackages attribute is a common parent package for the two classes. 
+				(Alternatively, you can specify a comma- or semicolon- or space-separated list that includes the parent 
+				package of each class.)
+
+				@Configuration
+				@ComponentScan(basePackages = "org.example")
+				public class AppConfig  {
+					...
+				}
+			
+			- The following alternative uses XML:
+
+				<?xml version="1.0" encoding="UTF-8"?>
+				<beans xmlns="http://www.springframework.org/schema/beans"
+					xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+					xmlns:context="http://www.springframework.org/schema/context"
+					xsi:schemaLocation="http://www.springframework.org/schema/beans
+						http://www.springframework.org/schema/beans/spring-beans.xsd
+						http://www.springframework.org/schema/context
+						http://www.springframework.org/schema/context/spring-context.xsd">
+
+					<context:component-scan base-package="org.example"/>
+
+				</beans>
+
+				NOTE: The use of <context:component-scan> implicitly enables the functionality of <context:annotation-config>. 
+					There is usually no need to include the <context:annotation-config> element when using 
+					<context:component-scan>.
+			
+	Java-based Container Configuration
+		- Basic Concepts: @Bean and @Configuration
+			- The central artifacts in Spring’s new Java-configuration support are @Configuration-annotated classes 
+				and @Bean-annotated methods.
+		
+			@Bean
+				- The @Bean annotation is used to indicate that a method instantiates, configures, and initializes 
+					a new object to be managed by the Spring IoC container. For those familiar with Spring’s <beans/> 
+					XML configuration, the @Bean annotation plays the same role as the <bean/> element. You can use 
+					@Bean-annotated methods with any Spring @Component. However, they are most often used with 
+					@Configuration beans.
+		
+			@Configuration
+				- Annotating a class with @Configuration indicates that its primary purpose is as a source of bean definitions. 
+					Furthermore, @Configuration classes let inter-bean dependencies be defined by calling other @Bean methods 
+					in the same class. The simplest possible @Configuration class reads as follows:
+
+						@Configuration
+						public class AppConfig {
+							@Bean
+							public MyService myService() {
+								return new MyServiceImpl();
+							}
+						}
+				
+				The preceding AppConfig class is equivalent to the following Spring <beans/> XML:
+
+					<beans>
+						<bean id="myService" class="com.acme.services.MyServiceImpl"/>
+					</beans>
+		Full @Configuration vs “lite” @Bean mode?
+			- When @Bean methods are declared within classes that are not annotated with @Configuration, they are referred to 
+				as being processed in a “lite” mode. Bean methods declared in a @Component or even in a plain old class are 
+				considered to be “lite”, with a different primary purpose of the containing class and a @Bean method being a 
+				sort of bonus there. 
+			- Unlike full @Configuration, lite @Bean methods cannot declare inter-bean dependencies. Instead, they operate on 
+				their containing component’s internal state and, optionally, on arguments that they may declare. 
+				Such a @Bean method should therefore not invoke other @Bean methods. Each such method is literally only a 
+				factory method for a particular bean reference, without any special runtime semantics.
+			- In common scenarios, @Bean methods are to be declared within @Configuration classes, ensuring that “full” mode 
+				is always used and that cross-method references therefore get redirected to the container’s lifecycle 
+				management. This prevents the same @Bean method from accidentally being invoked through a regular Java call, 
+				which helps to reduce subtle bugs that can be hard to track down when operating in “lite” mode.	
+			
+		Instantiating the Spring Container by Using AnnotationConfigApplicationContext
+			- When @Configuration classes are provided as input, the @Configuration class itself is registered as a bean 
+				definition and all declared @Bean methods within the class are also registered as bean definitions.
+			
+			Simple Construction
+				- In much the same way that Spring XML files are used as input when instantiating a 
+					ClassPathXmlApplicationContext, you can use @Configuration classes as input when instantiating an 
+					AnnotationConfigApplicationContext. This allows for completely XML-free usage of the Spring container, as 
+					the following example shows:
+				- e.g.,
+				
+					public static void main(String[] args) {
+						ApplicationContext ctx = new AnnotationConfigApplicationContext(AppConfig.class);
+						MyService myService = ctx.getBean(MyService.class);
+						myService.doStuff();
+					}
+			
+			Building the Container Programmatically by Using register(Class<?>…?)
+				- You can instantiate an AnnotationConfigApplicationContext by using a no-arg constructor and then configure it 
+					by using the register() method. This approach is particularly useful when programmatically building an 
+					AnnotationConfigApplicationContext.
+					
+			Enabling Component Scanning with scan(String…?)
+				- To enable component scanning, you can annotate your @Configuration class as follows:
+				- e.g.,
+					@Configuration
+					//This annotation enables component scanning.
+					@ComponentScan(basePackages = "com.acme") 
+					public class AppConfig  {
+						...
+					}
+				- In the preceding example, the com.acme package is scanned to look for any @Component-annotated classes, 
+					and those classes are registered as Spring bean definitions within the container.
+				
+				- The XML equivalent for above is
+					
+					<beans>
+						<context:component-scan base-package="com.acme"/>
+					</beans>
+
+		Using the @Bean Annotation
+			- @Bean is a method-level annotation and a direct analog of the XML <bean/> element. The annotation supports some 
+				of the attributes offered by <bean/>, such as: * init-method * destroy-method * autowiring * name.
+			- You can use the @Bean annotation in a @Configuration-annotated or in a @Component-annotated class.
+				
+			
+			Declaring a Bean
+				- To declare a bean, you can annotate a method with the @Bean annotation. You use this method to register a 
+					bean definition within an ApplicationContext of the type specified as the method’s return value. 
+					By default, the bean name is the same as the method name. The following example shows a @Bean method 
+					declaration:
+				- e.g.,
+					@Configuration
+					public class AppConfig {
+						@Bean
+						public TransferServiceImpl transferService() {
+							return new TransferServiceImpl();
+						}
+					}
+				
+				- The preceding configuration is exactly equivalent to the following Spring XML:
+
+					<beans>
+						<bean id="transferService" class="com.acme.TransferServiceImpl"/>
+					</beans>	
+				
+				- You can also declare your @Bean method with an interface (or base class) return type, as the following 
+					example shows:
+
+					@Configuration
+					public class AppConfig {
+						@Bean
+						public TransferService transferService() {
+							return new TransferServiceImpl();
+						}
+					}
+				
+				Bean Dependencies
+					- A @Bean-annotated method can have an arbitrary number of parameters that describe the dependencies 
+						required to build that bean. For instance, if our TransferService requires an AccountRepository, 
+						we can materialize that dependency with a method parameter, as the following example shows:
+
+					@Configuration
+					public class AppConfig {
+
+						@Bean
+						public TransferService transferService(AccountRepository accountRepository) {
+							return new TransferServiceImpl(accountRepository);
+						}
+					}
+					- The resolution mechanism is pretty much identical to constructor-based dependency injection. 
+
+		Using the @Configuration annotation
+			- @Configuration is a class-level annotation indicating that an object is a source of bean definitions. 
+				@Configuration classes declare beans through public @Bean annotated methods. Calls to @Bean methods on 
+				@Configuration classes can also be used to define inter-bean dependencies.
+				
+	Additional Capabilities of the ApplicationContext
+		- The org.springframework.beans.factory package provides basic functionality for managing and manipulating beans, 
+			including in a programmatic way. The org.springframework.context package adds the ApplicationContext interface, 
+			which extends the BeanFactory interface, in addition to extending other interfaces to provide additional 
+			functionality in a more application framework-oriented style. Many people use the ApplicationContext in a 
+			completely declarative fashion, not even creating it programmatically, but instead relying on support classes such 
+			as ContextLoader to automatically instantiate an ApplicationContext as part of the normal startup process of a 
+			Java EE web application.
+				
+		- The BeanFactory
+			- The BeanFactory API provides the underlying basis for Spring’s IoC functionality. Its specific contracts are 
+				mostly used in integration with other parts of Spring and related third-party frameworks, and its 
+				DefaultListableBeanFactory implementation is a key delegate within the higher-level GenericApplicationContext 
+				container.
+
+			- BeanFactory and related interfaces (such as BeanFactoryAware, InitializingBean, DisposableBean) are important 
+				integration points for other framework components. By not requiring any annotations or even reflection, they 
+				allow for very efficient interaction between the container and its components. Application-level beans may use 
+				the same callback interfaces but typically prefer declarative dependency injection instead, either through 
+				annotations or through programmatic configuration.
+
+			- Note that the core BeanFactory API level and its DefaultListableBeanFactory implementation do not make 
+				assumptions about the configuration format or any component annotations to be used. All of these flavors come 
+				in through extensions (such as XmlBeanDefinitionReader and AutowiredAnnotationBeanPostProcessor) and operate 
+				on shared BeanDefinition objects as a core metadata representation. This is the essence of what makes Spring’s 
+				container so flexible and extensible.
+	
+	BeanFactory or ApplicationContext?			
+		- You should use an ApplicationContext unless you have a good reason for not doing so, with GenericApplicationContext 
+			and its subclass AnnotationConfigApplicationContext as the common implementations for custom bootstrapping. 
+			These are the primary entry points to Spring’s core container for all common purposes: loading of configuration 
+			files, triggering a classpath scan, programmatically registering bean definitions and annotated classes, 
+			and (as of 5.0) registering functional bean definitions.
+
+		- Because an ApplicationContext includes all the functionality of a BeanFactory, it is generally recommended over a 
+			plain BeanFactory, except for scenarios where full control over bean processing is needed. Within an 
+			ApplicationContext (such as the GenericApplicationContext implementation), several kinds of beans are detected by 
+			convention (that is, by bean name or by bean type?—?in particular, post-processors), while a plain 
+			DefaultListableBeanFactory is agnostic about any special beans.
+
+		- For many extended container features, such as annotation processing and AOP proxying, the BeanPostProcessor 
+			extension point is essential. If you use only a plain DefaultListableBeanFactory, such post-processors do not get 
+			detected and activated by default. This situation could be confusing, because nothing is actually wrong with your 
+			bean configuration. Rather, in such a scenario, the container needs to be fully bootstrapped through additional 
+			setup.
+		
+		
+				
+				
+				
+				
+				
+				
+		
+		
+		
