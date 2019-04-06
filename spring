@@ -143,9 +143,66 @@ Bean Life Cycle Callback Methods
 		~ @PreDestroy annotated method is called just before the bean is about be destroyed 
 		   inside bean container.
 
+Spring BeanPostProcessor
+	- A bean post processor allows additional processing before and after the bean initialization callback method. 
+          The main characteristic of a bean post processor is that it will process all the bean instances 
+   	  in the IoC container one by one, not just a single bean instance.
+	
+	- To do
+		~ Implements BeanPostProcessor Interface
+		~ implementst postProcessBeforeInitialization() and postProcessAfterInitialization() methods.
 
+Autowire
+	- Bean dependencies is resolved automatically
+	- Type : 
+		- no
+			~ No Autowiring at all.
+		- byName
+			~ Autowiring by property name will look for a bean named exactly the same as the property which
+			  needs to be autowired
+		- byType
+			~ Allows a property to be autowired if there is exactly one bean of the property type in the 
+			  container. 
+			~ If there is more than one then it will throw exception
+		- constructor
+			~ This is analogous to byType, but applies to constructor argument. 
+		- autodetect
+			~ Choose constructor or byType through introspection of the bean class. 
+			~ First it will try to look for valid constructor with arguments, 
+			   If found the constructor mode is chosen
+			~ If there is no constructor defined in bean, 
+			   or explicit default no-args constructor is present, the autowire byType mode is chosen
 	
+	- Using @Autowired annotation
+		- @Autowired on properties
+		     	~ it is equivalent to autowiring by ‘byType‘ in configuration file.
+		- @Autowired on property setters
+			~ it is also equivalent to autowiring by ‘byType‘ in configuration file.
+		- @Autowired on constructors
+			~ it is also equivalent to autowiring by ‘constructor‘ in configuration file.
 	
+	- @Qualifier
+		- It resolves the dependency for byType autowire, if more than one bean is present of that type.
+		- we need to use @Qualifier annotation along with @Autowired annotation and pass the 
+		   bean name in annotation parameter
+		   
+	- Safe Autowiring with "required = false"
+		- It will make autowiring optional.
+		- If no dependency is found, it will be ignored, but it will not throw any exception.
+		
+		@Autowired (required=false)
+		@Qualifier ("finance")
+		private DepartmentBean departmentBean;
+		
+	- You can exclude a bean from being autowired.
+		- It can be done using ‘autowire-candidate‘ as false in the bean defination.
+		- It can be done for single class or for multiple class based on pattern matching.
+		
+
+		
+		
+		
+		
 	
 	
 	
