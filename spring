@@ -74,7 +74,36 @@ Bean Scope
 		~ store variables global for all portlets in your application
 		~ In portlets, there will be many applications inside a big application
 		~ bean with scope of ‘global-session’ will have only one instance for a global user session.
+
+Bean Life Cycle 
+	- IoC container will look for the configuration metadata of given Bean.
+	- Once found, the container will create the instance of Bean(Using reflection API).
+	- After instance, creation dependency will be injected(DI).
 	
+	- setBeanName method of BeanNameAware Interface. 
+		~ It sets the name of the bean in the bean factory that created this bean.
+ 	- setBeanClassLoader method of BeanClassLoaderAware Interface. 
+		~ Callback that supplies the bean to a bean instance.
+  	- setBeanFactory method of BeanFactoryAware Interface. 
+	 	~ Callback that supplies the owning factory to a bean instance.
+		
+	- All the aware method will be invoked like
+		~ setResourceLoader  method of ResourceLoaderAware Interface.
+	
+	- postProcessBeforeInitialization method of BeanPostProcessor Interface. 
+		~ Apply this BeanPostProcessor to the given new bean instance before any bean initialization callbacks.
+	- afterPropertiesSet method of InitializingBean Interface. 
+		~ Invoked by a BeanFactory after it has set all bean properties supplied.
+	
+	- Custom init method will be invoked.
+	- postProcessAfterInitialization methods of BeanPostProcessors. 
+		~ Apply this BeanPostProcessor to the given new bean instance after any bean initialization callbacks
+		
+	----	
+	- DisposableBean’s destroy method. 
+		~ Invoked by a BeanFactory on the destruction of a singleton.
+	- Custome destroy method will be executed if there is any defined via destroy-method attributes
+
 Bean Life Cycle Callback Methods
 	- InitializingBean and DisposableBean callback interfaces
 		~ It allows bean to perform initialization work after all necessary 
@@ -82,9 +111,13 @@ Bean Life Cycle Callback Methods
 		~ It contains respective method
 			~ void afterPropertiesSet() throws Exception;
 			~ public void destroy() throws Exception
+		~ it’s not recommended because it will create tight coupling with the Spring framework 
+		   in our bean implementations.
 		
 	- *Aware interfaces for specific behavior
 		~ It allow beans to indicate to the container that they require a certain infrastructure dependency
+		~ Sometimes we need Spring Framework objects in our beans to perform some operations, for example reading 
+		  ServletConfig and ServletContext parameters or to know the bean definitions loaded by the ApplicationContext.
 		~ It contains method like
 			~ public void setResourceLoader(ResourceLoader arg0)
 			~ public void setMessageSource(MessageSource arg0)
@@ -109,7 +142,8 @@ Bean Life Cycle Callback Methods
 		   using default constructor and just before it’s instance is returned to requesting object.
 		~ @PreDestroy annotated method is called just before the bean is about be destroyed 
 		   inside bean container.
-	
+
+
 	
 	
 	
