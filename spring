@@ -166,7 +166,9 @@ Autowire
 			~ If there is more than one then it will throw exception
 		- constructor
 			~ This is analogous to byType, but applies to constructor argument. 
-		- autodetect
+			~ It look for class type of constructor arguments, and then do a autowire by type on 
+			   all constructor arguments.
+		- autodetect (deprecated)
 			~ Choose constructor or byType through introspection of the bean class. 
 			~ First it will try to look for valid constructor with arguments, 
 			   If found the constructor mode is chosen
@@ -198,10 +200,34 @@ Autowire
 		- It can be done using ‘autowire-candidate‘ as false in the bean defination.
 		- It can be done for single class or for multiple class based on pattern matching.
 		
-
+final static bean
+	- final static bean can be injected using <util:constant> tag.
+	- <util:constant id="MANAGER" static-field="com.howtodoinjava.demo.model.EmployeeDTO.MANAGER" />
 		
-		
-		
+@Required
+	- check if attributes values have been set 
+	- it can’t check if their value is set to null or non-null values.
+	- It can be used with setter method of bean property.
+	- If it is not set it will throw exception BeanInitializationException
+	- It requires enabling bean post processor RequiredAnnotationBeanPostProcessor
+	
+@Scheduled
+	- @Scheduled annotation is used for task scheduling based on cron expression
+	- It uses @Scheduled annotation
+	- Properties
+		- fixedRate 
+			~ It makes Spring run the task on periodic intervals even if the last invocation may be still running.
+			~ @Scheduled(fixedDelay =30000)
+		- fixedDelay
+		 	~ specifically controls the next execution time when the last execution finishes.
+			~ @Scheduled(fixedRate=30000)
+		- cron
+			~ It is a feature originating from Unix cron utility and has various options based on your requirements.
+			~ @Scheduled(cron="0 0 * * * *")
+	- To use it
+		- Update xml and schema namespace in the xml file.
+		- task:annotation-driven to be added
+	- It should not have arguments or should not return anything.
 		
 	
 	
