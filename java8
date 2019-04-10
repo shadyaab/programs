@@ -1,1 +1,29 @@
-
+Functional Interface
+	- interface having exacly one abstract method
+	- it can have any number of static as well as default method.
+  
+Static method (Why)
+	- Collections class is a utility class for Collection framwork. With the introduction of static method separate utility class will
+      disappear.
+	- method to perform basic operations will be kept in the method inside interface.
+	- static method cannot be implemented.
+  
+Default method
+	- Default methods are introduced to add extra features to current interfaces without disrupting their existing implementations
+	- Ex- stream() method is added in collection interface.
+	- Default method can be implemented but its not required.
+	- If a class inherits multiple methods with same signature from different interface, it will be compile time error saying duplicate.
+		hence it should have its own implementation class.
+	- major reason for introducing default methods in interfaces is to enhance the Collections API in Java 8 to support lambda expressions
+	
+Three Rules To Solve Diamond Problem
+	- Select classes over interfaces
+		~ If your class extends any class and inherits multiple methods with same signature, then method from super class is selected.
+		~ If your class doesn’t extend any class and inherit multiple methods with same signature from multiple interfaces 
+		   which belong to same hierarchy, then a method from most specific interface is selected 
+		   (If interface X extends Y then X is more specific than Y).
+		~ If your class doesn’t extend any class and inherit multiple methods with same signature from multiple interfaces which doesn’t 
+		   belong to same hierarchy, then override that method and from within body explicitly call desired method as 
+		   InterfaceName.super.methodName().
+		   
+		   
