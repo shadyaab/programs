@@ -1,6 +1,9 @@
 Functional Interface
 	- interface having exacly one abstract method
 	- it can have any number of static as well as default method.
+	- Ex - Runnable, Callable, Compartor
+	- Return type and possible list of exceptions that can be thrown are not explicitly mentioned in a lambda. They are implicitly applied.
+	- You can use local variables inside a lambda expression just like anonymous inner classes provided they must be final or effectively final.
   
 Static method (Why)
 	- Collections class is a utility class for Collection framwork. With the introduction of static method separate utility class will
@@ -26,4 +29,91 @@ Three Rules To Solve Diamond Problem
 		   belong to same hierarchy, then override that method and from within body explicitly call desired method as 
 		   InterfaceName.super.methodName().
 		   
-		   
+Interface vs Abstract class
+	- Field
+		~ Interfaces can only have public, static and final variables
+		~ abstract class can have static as well as non-static and final as well as non-final variables. It can have public, protected 
+			as well as private variables
+	- methods
+		~ interface doesn't support final method. It can have static as well as default methods.
+		~ abstract class supports final methods but doesnot support default method.
+		
+	- constructor
+		~ interface can't have contructor
+		~ abstract class can have any number of constructor.
+		
+	- Member assessiblity
+		~ all member in interface have public methods.
+		~ abstract class can all type of access modifier
+	
+	- multiple inheritence
+		~ interface support multiple inheritence 
+		~ abstract class doesn't support multiple inheritence.
+		
+Java 8 method references
+	- method reference.
+		~ Integer::pareInt
+	- constructor refernce
+		~ SomeClass ref = SomeClass::new
+		  ref.get();
+		  
+Stream 
+	- filter	
+		~ list.stream().filter(i -> i > 10)
+	- map
+		~ list.stream().map(d -> 1)
+	- mapToInt
+		~ list.stream().filter(i -> i > 10).mapToInt(i -> i).sum();
+	- flatMap
+		~ 
+	- distinct	
+	
+	Creation of stream
+		- iterate
+			~ Stream.iterate(0, d -> d + 1).filter(d -> d % 2 == 0).limit(100);
+		- generate 
+			~ Stream.generate(Math::random).limit(100);
+		- of
+			~ Stream.of("Red","Green","Blue")
+		- Arrays.stream(array)
+	
+	Short circuit
+		- limit
+			~ Stream.iterate(0, d -> d + 1).limit(100);
+		- skip
+			~ Stream.iterate(0, d -> d + 1).skip(5);
+	
+		- anyMatch
+			~ menu.stream().filter(d -> d.isVegetarian()).findAny();
+		- allMatch
+		- noneMatch
+		- findAny
+		- ifPresent
+	
+	Operation 
+		- count
+		- sum
+			~ stream.iterate(5, d -> d + 1).sum();
+		- max
+		- min
+		- avg
+	
+	Others
+		- forEach	
+			~Stream.of(s).forEach(d -> System.out.println(d + " : "));
+			
+	Terminal Operation
+		- reduce
+			~ list.stream().map(d -> 1).reduce(0, (a, b) -> a + b);
+	
+			
+Limitation of lambdas expression
+	- Stateless lambda expressions
+		~ in parallel stream order is not maintained, to avoid it use sequential stream.
+	- Once a Stream is consumed, it can’t be used later on
+	- most confusing part is the overloaded methods
+	
+
+		
+		
+	
