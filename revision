@@ -467,15 +467,40 @@ Map
 			- It maintain no order.
 			- HashMap gives constant time performance for the operations like get() and put() methods.
 			- Default initial capacity of HashMap is 16.
+			- HashMap can have multiple null values and only one null key.
+			- If the key is null, it calls putForNullKey() method. table[0] is always reserved for null key.
+				hash value of null is 0
+			- The default initial capacity of the HashMap is 24 i.e 16
+			-  The capacity of the HashMap is doubled each time it reaches the threshold
+			- The default load factor is 0.75f.
+			- allows duplicate values but doesn’t allow duplicate keys.
+			- The iterators returned are fail-fast in nature.
 		- LinkedHashMap
 		- TreeMap
+		- HashTable
+			- HashTable extends Dictionary class which is the legacy class in java.
+			- Its synchronized.
+			- Where as HashTable doesn’t allow even a single null key and null value.
+			- HashTable returns Iterator as well as Enumeration which can be used to traverse over the elements of HashTable.
+			- Its fail-safe
+			
+			
+			
+			
+			
+			
+			
+			
+			
 			
 		
+			
 fail-fast	
 	- if you modify after the iterator is created, it will throw ConcurrentModification Exception.
 	
 fail-safe
-	- 
+	-  they don’t throw any exceptions if it is modified after the creation of enumeration.
+	- Ex- HashTable
 			
 Iterator vs ListIterator
 	- Using Iterator, you can traverse List, Set and Queue type of objects but we can traverse the elements only in forward direction
