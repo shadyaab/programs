@@ -329,9 +329,164 @@ Inheritance of Inner class
 	- Inner class can extend it’s outer class
 		~ it does not serve any meaning
 		~ Because, even the private members of outer class are available inside the inner class
-		
+
+
+============================================================================================
+Inner Class
+============================================================================================		
 		   
+List
+	- Elements of the lists are ordered using Zero based index.
+	- You can access the elements of lists using an integer index.
+	- Elements can be inserted at a specific position using integer index. Any pre-existing elements at or beyond that position are shifted right.
+	- Elements can be removed from a specific position. The elements beyond that position are shifted left.
+	- A list may contain duplicate elements.
+	- A list may contain multiple null elements.
 	
+	Types:
+		- ArrayList  (extends abtractList and implements List)
+			- You can traverse an ArrayList in both the directions – forward and backward using ListIterator.
+			- ArrayList internally uses an array to store its elements
+			- ArrayList can hold only Object.
+			- When reaches threshold, capacity is increase by half of current capacity.
+			
+			- Collections.sort(listOfStudents, new OrderByPercentage());    //Sort using Comparator
+			- Collections.sort(list, Collections.reverseOrder());   		//sort in reverse order
+			- Collections.sort(list, String.CASE_INSENSITIVE_ORDER);		//sort by ignoring case
+			- Collections.reverse(list);
+			
+		- Vector	(extends abtractList and implements List)
+			- vector is synchronized
+			- Unlike an ArrayList, you can set the size of the Vector manually
+			- It get double when size reaches threshold
+			- Traversed using Enumeration.
+			- unlike ArrayList it has firstElement() and lastElement()
+			- unlike which start from beginning, you can start searching for a particular element from a particular position in a vector
+			
+		- LinkedList	(extends AbstractSequentialList(which in turns extends AbstractList) and implements List, Queue)
+			- Its doubly linked list.
+			- Elements can be inserted and can be removed from both the ends and can be retrieved from any arbitrary position.
+			- Insertion and removal operations in LinkedList are faster than the ArrayList
+			- Retrieval of the elements is very slow in LinkedList as compared to ArrayList. Becaues in LinkedList, you have to traverse from 
+			     beginning or end (whichever is closer to the element) to reach the element.
+			- Its not random access
+			- It maintain insertion order.
+			
+Queue	
+	- Queue is a data structure in which elements are added from one end and elements are deleted from another end. 
+	- Have two pointer head and tail.
+	- Null elements are not allowed in the queue. If you try to insert null object into the queue, it throws NullPointerException.
+	- Queue can have duplicate elements.
+	- not random access.
+	- poll and remove 
+		~ get the element from head and removes it.
+		~ If no element found, poll will return null as well as remove will throw exception
+	- peek and element
+		~ get the element without removing it.
+		~ If no element found, get will return null as well as element will throw exception
+	
+	Type:		
+		- PriorityQueue 	(extends AbstractQueue (which in turn implement Queue))
+			- The PriorityQueue is a queue in which elements are ordered according to specified Comparator
+			- If no Comparator is specified, elements will be placed in their natural order
+			- Its not FIFO
+			- null is not allowed
+			- Elements in the PriorityQueue must be of Comparable type, If not ClassCastException at run time will be thrown.
+			- The PriorityQueue is unbounded which means capacity grows but not certain.
+			- The default initial capacity of PriorityQueue is 11.
+			
+Deque	(extends Queue)
+	- Double Ended Queue
+	- Deque is a linear collection of objects which supports insertion and removal of elements from both the ends
+	- Can be used as both Queue(FIFO) as well as Stack(LIFO)
+	- It has two more methods – pop() and push() which makes it a candidate for stack.
+	- It can have null values.
+		
+	Type:	
+		- ArrayDequeue		(extends AbstractCollection and implements Queue)
+			- which allows insertion of elements at both the ends
+			- Default initial capacity of ArrayDeque is 16
+			- ArrayDeque is faster than the Stack class when used as a stack
+			- ArrayDeque is faster than the LinkedList class when used as a queue
+		
+Set
+	- No duplicates
+	- Set doesn't have any method of its own.
+	- Only changes in set is if we add(element) it return false if it already present.
+	- Can contain only one null values.
+	- No random access.
+	
+	Types:
+		- HashSet	(extends AbstractSet implements Set)
+			- Hashset element are ordered on hashcode of the element.
+			- HashSet gives constant time performance for insertion, removal and retrieval operations
+			- It allows only one null element.
+			- The HashSet internally uses HashMap to store the objects
+			- The elements you insert in HashSet will be stored as keys of that HashMap object and their values will be a constant called PRESENT. 
+			- If you try to insert a duplicate element, older element will be overwritten.
+			- If you want synchronized HashSet, use Collections.synchronizedSet()
+			- Whenever you create a HashSet object, one HashMap object associated with it is also created
+			- HashSet uses equals() and hashCode() methods to compare the elements and thus removing the possible duplicate elements.
+			- Iterator returned by all three is fail-fast in nature
+			
+		- LinkedHashedSet   	(extends HashSet implements Set)
+			- It maintain insertion order.
+			- Its doubly linked list
+			- Internally uses LinkedHashMap 
+			- slightly have less performance than Hashset since it maintain insertion order.
+			- Iterator return by LinkedHashset is fail-fast i.e. 
+			- It allow only one null value.
+			- Contructor of this class call super constructor(HashSet), which internally create object of linkedHashMap.
+			- LinkedHashSet doesn't have method of its own, it inherit from super class.
+			- The elements you insert in LinkedHashSet will be stored as keys of that LinkedHashMap object and their values will be a constant called PRESENT.
+			- LinkedHashSet also uses equals() and hashCode() methods to compare the elements.
+			- The insertion order of elements into LinkedHashMap are maintained by adding two new fields to this class. They are before and after
+				These two fields hold the references to previous and next elements
+		
+		- TreeSet		(extends AbstractSet and implements NavigableSet(which inturn extends SortedSet)
+			- Tree element are order according to the comparator supplied
+			- Its sorted 
+			- If you don’t pass any Comparator while creating a TreeSet, elements will be placed in their natural ascending order.
+			- If the elements are not mutually Comparable, then it will throw ClassCastException at runtime.
+			- It doesn't allow even single null value.
+			- TreeSet gives performance of order log(n) for insertion, removal and retrieval operations.
+			- If TreeSet is modified after the creation of Iterator object, you will get ConcurrentModificationException.
+			- TreeSet internally uses TreeMap
+			- TreeSet uses compare() or compareTo() methods to compare the elements and thus removing the possible duplicate elements
+			- It doesn’t use equals() and hashCode() methods for comparision of elements.
+			
+Map
+	- It doesnot inherits from Collection interface.
+	- It store key value pair.
+	- A map can not have duplicate keys but can have duplicate values.
+	- Each key-value pairs of the map are stored as Map.Entry objects. Map.Entry is an inner interface of Map interface.
+	- method like keySet(), values(), entrySet()
+	
+	Types:
+		- HashMap  		(extends AbstractMap)
+			- It maintain no order.
+			- HashMap gives constant time performance for the operations like get() and put() methods.
+			- Default initial capacity of HashMap is 16.
+		- LinkedHashMap
+		- TreeMap
+			
+		
+fail-fast	
+	- if you modify after the iterator is created, it will throw ConcurrentModification Exception.
+	
+fail-safe
+	- 
+			
+Iterator vs ListIterator
+	- Using Iterator, you can traverse List, Set and Queue type of objects but we can traverse the elements only in forward direction
+	- using ListIterator, you can traverse only List objects but using ListIterator you can traverse the elements in both the directions
+	- Using ListIterator, you can perform modifications(insert, replace, remove) on the list. But, using Iterator you can only
+    	remove the elements from the collection.
+	- Using ListIterator, you can iterate a list from the specified index. It is not possible with Iterator. 
+	
+	
+			
+					   
 
 
 
