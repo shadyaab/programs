@@ -332,7 +332,7 @@ Inheritance of Inner class
 
 
 ============================================================================================
-Inner Class
+Collection
 ============================================================================================		
 		   
 List
@@ -371,6 +371,10 @@ List
 			     beginning or end (whichever is closer to the element) to reach the element.
 			- Its not random access
 			- It maintain insertion order.
+		- CopyOnWriteArrayList 
+			- It is enhanced version of ArrayList in which all modifications (add, set, remove, etc) are implemented by making a fresh copy.
+			- CopyOnWriteArrayList creates a Cloned copy of underlying ArrayList, for every update operation
+			-  Iterator of CopyOnWriteArrayList can not perform remove operation
 			
 Queue	
 	- Queue is a data structure in which elements are added from one end and elements are deleted from another end. 
@@ -483,17 +487,10 @@ Map
 			- Where as HashTable doesn’t allow even a single null key and null value.
 			- HashTable returns Iterator as well as Enumeration which can be used to traverse over the elements of HashTable.
 			- Its fail-safe
+		- ConcurrentHashMap
+			- ?????????
 			
-			
-			
-			
-			
-			
-			
-			
-			
-			
-		
+	
 			
 fail-fast	
 	- if you modify after the iterator is created, it will throw ConcurrentModification Exception.
@@ -510,12 +507,64 @@ Iterator vs ListIterator
 	- Using ListIterator, you can iterate a list from the specified index. It is not possible with Iterator. 
 	
 	
+
+============================================================================================
+Concurrent Programming
+============================================================================================			
+		
+Thread Safe
+	- A class is thread-safe if it behaves correctly when accessed from multiple threads, regardless of the scheduling or interleaving of the execution of
+        those threads by the runtime environment, and with no additional synchronization or other coordination on the part of the calling code.
+		
+Atomicity
+	- It mean single and indivisible operation.
+	
+Race Condition
+	- Race condition occur when the correctness of the program depends on the relative timing of multiple thread running concurrently. 
+	- Type:
+		- check-then-act
+			- lazy initialization
+			- The goal of lazy initialization is to defer initialing an Object untill it is actually needed.
+			- while at the same time ensuring that it is initialized only once.
 			
-					   
+		- read-modify-write
+			- Like incrementing counter (counter++)
+	- Adding one thread safe state object to the thread safe class doesn't impact its thread safety.
+	- Adding more than one thread safe state object to the thread safe class impact its thread safety.
+		~ Since both object is not an atomic operation collectively.
+		
+synchronized block
+	- it has two part, one is the reference to an object that will serve as lock, and the other is the block of code to be gaurded
+		by the lock.
+	- A synchronized method is a shorthand for a synchronized block
+	- In a synchronized method, lock is the object on which the method is been called, and block is the complete method.
+	- static synchronized method use the class object for the lock. 
+	- No matter how the synchronized block is exited, the object lock acquired when the thread entered the block definitely will be released.
+	
+Monitor
+	- A monitor is basically a guardian in that it watches over a sequence of code, making sure only one thread at a time executes the code.
+	- Each monitor is associated with an object reference
+	
+Intrinsic lock or Monitor lock
+	- the lock is automatically acquired by the executing thread, before entering into the synchronized block and
+		the lock is release automatically when control exits the synchronized block.
+	- The only way to acquire an intrinsic lock is to enter a synchronized block or method guarded by that lock.
+	- Intrinsic locks in java acts as a mutex (Mutually exclusive lock)
+	
+Mutex 
+	- Mutually exclusive locks.
+	- At most one thread may own the lock.
+	
+Reentrancy
+	- If a thread tries to acquire the lock which it already holds, the request succeeds.
+	- Retrancy means that lock are acquired on per-thread basis and not on per-invocation basis.
+	- Reentrancy is implemented by associating with each lock an acquisition count and an owning thread.
+	- Without reentrant locks, in which a subclass overrides a synchronized method and then calls the superclass method, would be deadlock. 
+		~ Because the doSomething methods in Widget and LoggingWidget are both synchronized, and each tries to acquire the lock 
+		  on the Widget before proceeding.
 
 
 
-  
-  
+
   
 
