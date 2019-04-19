@@ -114,6 +114,40 @@ abstract
   - 
 
 
+============================================================================================
+Exception 
+============================================================================================
+
+Checked Exception
+	- Checked exceptions are checked at compile-time
+	- It means if a method is throwing a checked exception then it should handle the exception
+	- If it h=is not handled it will give compile time error.
+	- Checked Exception is direct sub-Class of Exception
+	- Ex - FileNotFoundException, IOException, SQLException, ClassNotFoundException
+	
+Unchecked Exception
+	- Unchecked exceptions are not checked at compile time
+	- It means if your program is throwing an unchecked exception and even if you didn’t handle/declare that exception, 
+	   the program won’t give a compilation error
+	- All Unchecked exceptions are direct sub classes of RuntimeException class.
+	-  ArrayIndexOutOfBoundsException, NullPointerException, ArithmeticException, NumberFormatException
+	
+Error
+	- Error class represents the errors which are mainly caused by the environment in which application is running
+	- It can't be handled. Recovering from Error is not possible
+	- It is considered as Unchecked Exception.
+	- Errors happen at run time. They will not be known to compiler.
+	- Ex - OutOfMemoryError, StackOverflowError  
+
+throw
+	- throw is a keyword in java which is used to throw an exception manually
+
+throws
+	- throws is also a keyword in java which is used in the method signature to indicate that this method may throw mentioned exceptions
+	- The caller to such methods must handle the mentioned exceptions 
+
+Throwable
+	- Throwable is a super class for all types of errors and exceptions in java
 
 
 ============================================================================================
@@ -488,9 +522,12 @@ Map
 			- HashTable returns Iterator as well as Enumeration which can be used to traverse over the elements of HashTable.
 			- Its fail-safe
 		- ConcurrentHashMap
-			- ?????????
-			
-	
+			- it only locks a portion of Map, instead of whole Map
+			- Its fail-safe
+			- ConcurrentHashMap allows concurrent read and thread-safe update operation.
+			- During the update operation, ConcurrentHashMap only locks a portion of Map instead of whole Map.
+			- The concurrent update is achieved by internally dividing Map into the small portion which is defined by concurrency level.
+			- ConcurrentHashMap doesn't allow null as key or value.
 			
 fail-fast	
 	- if you modify after the iterator is created, it will throw ConcurrentModification Exception.
@@ -563,8 +600,116 @@ Reentrancy
 		~ Because the doSomething methods in Widget and LoggingWidget are both synchronized, and each tries to acquire the lock 
 		  on the Widget before proceeding.
 
+Volatile
+	- Value is read from the memory each time rather than reading it from thread local cache or else where.
+	- Volatile variables only garuantees visibilty 
+	- It is safe to perform read-modify-write operations on shared volatile variables as long as you ensure 
+	   that the volatile variable is only written from a single thread.
+
+* Locking is not just about mutual exclusion; it is also about memory visibility. To ensure that all threads see the most up-to-date values of shared
+    mutable variables, the reading and writing threads must synchronize on a common lock.
+
+* Locking can guarantee both visibility and atomicity; volatile variables can only guarantee visibility.
+
+Sharing Objects:
+	- Visibility
+		- We want not only to prevent one thread from modifying the state of an object when another is using it, but also to ensure that when a 
+		    thread modifies the state of an object, other threads can actually see the changes that were made.
+	- Stale Data
+		- It is something that we can see out-of-date value without using synchronization.
+		
+	- Thread Confinement
+		- If data is only accessed from a single thread, no synchronization is needed.
+		Type:
+			- Ad-hoc confinement
+				~ Ad-hoc thread confinement describes when the responsibility for maintaining thread confinement falls entirely on the implementation.
+			- Stack Confinement
+				~ Stack confinement is a special case of thread confinement in which an object can only be reached through local variables.
+				~ LOcal variable are intrinsically confined to the executing thread.
+			- ThreadLocal
+				~ Thread-Local provides get and set accessor methods that maintain a separate copy of the value for each thread that uses it,
+ 				   so a get returns the most recent value passed to set from the currently executing thread.
+				~ The thread-specific values are stored in the Thread object itself; 
+				~ when the thread terminates, the thread-specific values can be garbage collected.
+	- Immutability
+		- Immutable object are inherently thread-safe.
+	
+Synchronizers
+		- Latches 
+			- A latch is a sychronizer that delay the execution of thread untill it reaches terminal state.
+			- Latches can be used to ensure that certain activities do not proceed until other one-time activities complete
+			- Ex- wait untill all players are ready in a multiplayer game.
+			- Latches are single-use objects; once a latch enters the terminal state, it cannot be reset.
+			
+		- FutureTask
+			- Its also act as a latch.
+			- Once a FutureTask enters the completed state, it stays in that state forever
+			- The behavior of Future.get depends on the state of the task. 
+			     If it is completed, get returns the result immediately, and otherwise blocks until the task transitions to the completed state
+			- FutureTask is used by the Executor framework to represent asynchronous tasks.
+		
+		- Semaphores
+			- Counting semaphores are used to control the number of activities that can access a certain resource or perform 
+			   a given action at the same time
+			- Counting semaphores can be used to implement resource pools or to impose a bound on a collection.
+			- block if the pool is empty and unblock when it becomes nonempty again.
+			- Ex - database connection pools
+			
+		- Barriers
+			- Barriers are similar to latches in that they block a group of threads until some event has occurred
+			- The key difference is that with a barrier, all the  threads must come together at a barrier point at the same time in order to proceed.
+			- Latches are for waiting for events; barriers are for waiting for other threads.
+			- await blocks until all the threads have reached the barrier point
+			- If all threads meet at the barrier point, the barrier has been successfully passed, in which case all threads 
+			   are released and the barrier is reset so it can be used again.
+			   
+Executor
+	- newFixedThreadPool
+		- A fixed-size thread pool creates threads as tasks are submitted, up to the maximum pool size, and then attempts to keep the pool size constant 
+	- newCachedThreadPool
+		- A cached thread pool has more flexibility to reap idle threads when the current size of the pool exceeds the demand for processing, and to add new threads when demand increases, but places no bounds on the size of the pool.
+	- newSingleThreadExecutor.
+		- A single-threaded executor creates a single worker thread to process tasks, replacing it if it dies unexpectedly.
+		- Tasks are guaranteed to be processed sequentially according to the order imposed by the task queue
+	- newScheduledThreadPool.
+		- A fixed-size thread pool that supports delayed and periodic task execution, similar to Timer.
+
+Lock
+	- Lock is an interface
+	- ReentrantLock is the class implementing Lock.
+	- Methods like
+		- void lock();
+		- void lockInterruptibly() throws InterruptedException;
+		- boolean tryLock();
+		- boolean tryLock(long timeout, TimeUnit unit) throws InterruptedException;
+		- void unlock();
+		- Condition newCondition();
+	- It behave same ways as synchronized, but it is explicit.
+
+Limitation of synchronized block
+	- it is not possible to interrupt a thread waiting to acquire a lock
+	- or to attempt to acquire a lock without being willing to wait for it forever
+	- Intrinsic locks also must be released in the same block of code in which they are acquired
+	
+Benefits of ReentrantLock
+	- provides more control on lock acquisition is trying to get a lock with ability to interrupt
+	- timeout on waiting for lock
+	- ReentrantLock provides convenient tryLock() method, which acquires lock only if its available or not held by any other thread
+	- provides a method called lockInterruptibly(), which can be used to interrupt thread when it is waiting for lock
+	- ReentrantLock also provides convenient method to get List of all threads waiting for lock.
 
 
 
+
+
+
+
+
+
+
+
+
+  
+  
   
 
