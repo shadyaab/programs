@@ -15,13 +15,42 @@ package net.sady.interview.array;
  */
 public class MaxProductSubarray {
 
-	private int maxProduct(int[] input) {
-		return 0;
+	private int maxProduct(int[] arr) {
+		int neg = 1;
+		int pos = 1;
+		int maxProduct = arr[0];
+		for(int i= 0; i< arr.length; i++) {
+			if(arr[i] == 0) {
+				neg = 1;
+				pos = 1;
+				maxProduct = Math.max(maxProduct, 0);
+			
+			} else if(arr[i] > 0) {
+				if(neg < 0 ) {
+					neg = neg * arr[i];
+				}
+				pos = pos * arr[i];
+				maxProduct = Math.max(maxProduct, pos);
+			
+			} else {
+				int temp = pos;
+				if(neg > 0) {
+					pos = 1;
+				} else {
+					pos = neg * arr[i];
+					maxProduct = Math.max(maxProduct, pos);
+				}
+				neg = temp * arr[i];
+			}
+			
+		}
+		return maxProduct;
 	}
 
 	public static void main(String args[]) {
 		MaxProductSubarray mps = new MaxProductSubarray();
-		int input[] = { -6, -3, 8, -9, -1, -1, 3, 6, 9, 0, 3, -1 };
+		//int input[] = { 1, 3, 10, 0, 60};
+		int input[] = {6, -3, -10, 0, 2};
 		System.out.println(mps.maxProduct(input));
 	}
 
