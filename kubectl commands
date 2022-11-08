@@ -12,4 +12,41 @@ replicaset
   kubectl scale --replicas=6 replicaset myapp-replicaset
   kubectl edit replicaset myapp-replicaset
   
+namespace
+  kubectl get namespaces [get all the namespace in that cluster]
+  kubectl create namespace dev
+  kubectl config set-context $(kubectl config current-context) --namespace=dev
+  kubectl get pods --all-namespaces [Get all the pod in all the namespace]
+
+Create object
+  kubectl run nginx --image=nginx:alpine --label="tier=db"
+  
+
+Dry-Run
+  kubectl run nginx --image=nginx --dry-run=clinet -o yaml [It will not create but only dry run]
+  kubectl run nginx --image=nginx --dry-run=clinet -o yaml > text.yaml [save it in file]
+   
+  
+Service
+  kubectl expose pod redis --port=6379 --name redis-service
+  kubectl create service clusterip redis --tcp=6379:6379
+  kubectl expose pod nginx --port=80 --name nginx-service --type=NodePort
+  kubectl create service nodeport nginx --tcp=80:80 --node-port=30080
+  
+Pod and service both
+  kubecl run httpd --image=nginx --port=80 --expose=true
+  
+Edit Deployment
+  kubectl edit deployment my-deployment
+  
+Edit Pod
+  kubectl edit pod mypod
+  kubectl replace --force -f /tmp/file.yaml
+  
+  
+  
+
+  
+  
+  
 
