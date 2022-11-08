@@ -5,6 +5,8 @@ pod
   kubectl get pods -o wide
   kubectl get pod myapp -o yaml > pod-defination.yaml
   kubectl delete --all pod
+  kubectl run pod mypod -image="image"
+  kubectl edit pod mypod || kubectl replace --force -f /tmp/file.yaml
 
 replicaset
   kubectl replace -f replicaset-defination.yaml
@@ -38,11 +40,6 @@ Pod and service both
   
 Edit Deployment
   kubectl edit deployment my-deployment
-  
-Edit Pod
-  kubectl edit pod mypod
-  kubectl replace --force -f /tmp/file.yaml
-  
   
   
 
