@@ -1,23 +1,76 @@
 Instance Purchasing Options:
-  On-Demand Instances 
-    – Pay, by the second, for the instances that you launch.
-  Savings Plans 
-    – Reduce your Amazon EC2 costs by making a commitment to a consistent amount of usage, in USD per hour, for a term of 1 or 3 years.
-  Reserved Instances 
-    – Reduce your Amazon EC2 costs by making a commitment to a consistent instance configuration, including instance type and Region, for a term of 1 or 3 years.
+---------------------------
+On-Demand Instances 
+  – With On-Demand Instances, you pay for compute capacity by the second with no long-term commitments. 
+  - You have full control over the instance's lifecycle—you decide when to launch, stop, hibernate, start, reboot, or terminate it.
+  - There is no long-term commitment required when you purchase On-Demand Instances. 
+
+Reserved Instances 
+  – Reduce your Amazon EC2 costs by making a commitment to a consistent instance configuration, including instance type and Region, 
+    for a term of 1 or 3 years.
+  - Reserved Instances provide you with significant savings on your Amazon EC2 costs compared to On-Demand Instance pricing. 
+
+  Payment options
+    - All Upfront: Full payment is made at the start of the term, with no other costs or additional hourly charges incurred for the remainder of the term, regardless of hours used.
+    - Partial Upfront: A portion of the cost must be paid upfront and the remaining hours in the term are billed at a discounted hourly rate, regardless of whether the Reserved Instance is being used.
+    - No Upfront: You are billed a discounted hourly rate for every hour within the term, regardless of whether the Reserved Instance is being used. No upfront payment is required.
+
+Scheduled Reserved Instances
+  - With Scheduled Reserved Instances, you can reserve capacity that is scheduled to recur daily, weekly, or monthly, 
+    with a specified start time and duration, for a one-year term. After you complete your purchase, the instances are available to launch 
+    during the time windows that you specified.
+
+Spot Instances 
+  – Request unused EC2 instances, which can reduce your Amazon EC2 costs significantly.
+  - A Spot Instance is an instance that uses spare EC2 capacity that is available for less than the On-Demand price
+  - Spot Instances are a cost-effective choice if you can be flexible about when your applications run and if your applications can be interrupted.
+  - Spot Instances are well-suited for data analysis, batch jobs, background processing, and optional tasks. 
+  - Amazon EC2 provides a Spot Instance interruption notice, which gives the instance a two-minute warning before it is interrupted.
+
+Dedicated Instances 
+  - Dedicated Instances are EC2 instances that run on hardware that's dedicated to a single customer.
+  – Pay, by the hour, for instances that run on single-tenant hardware.
+
+Dedicated Hosts 
+  - Same as Dedicated instance
+  - A Dedicated Host is also a physical server that's dedicated for your use. With a Dedicated Host, you have visibility and control over how instances are placed on the server
+  – Pay for a physical host that is fully dedicated to running your instances, and bring your existing per-socket, per-core, or per-VM software licenses to reduce costs.
+  
+On Demand Capacity Reservations 
+  – On-Demand Capacity Reservations enable you to reserve compute capacity for your Amazon EC2 instances in a specific Availability Zone for any duration.
+  - Capacity Reservations mitigate against the risk of being unable to get On-Demand capacity in case there are capacity constraints
+  
+AWS Elastic Beanstalk
+----------------------
+With Elastic Beanstalk, you can quickly deploy and manage applications in the AWS Cloud without having to learn about the infrastructure 
+that runs those applications. Elastic Beanstalk reduces management complexity without restricting choice or control. You simply upload your application, 
+and Elastic Beanstalk automatically handles the details of capacity provisioning, load balancing, scaling, and application health monitoring.
+  
+  
+Lambda
+-------
+AWS Lambda is a compute service that lets you run code without provisioning or managing servers.
+Lambda runs your code on a high-availability compute infrastructure and performs all of the administration of the compute resources, 
+including server and operating system maintenance, capacity provisioning and automatic scaling, and logging. With Lambda, 
+all you need to do is supply your code in one of the language runtimes that Lambda supports.
+  
+Function 
+  - A function is a resource that you can invoke to run your code in Lambda. 
+  - A function has code to process the events that you pass into the function or that other AWS services send to the function.
+  
+ Trigger
+  - A trigger is a resource or configuration that invokes a Lambda function.
+  - triggers include AWS services that you can configure to invoke a function and event source mappings (An event source mapping 
+    is a resource in Lambda that reads items from a stream or queue and invokes a function.)
     
-    Payment options
-      - All Upfront: Full payment is made at the start of the term, with no other costs or additional hourly charges incurred for the remainder of the term, regardless of hours used.
-      Partial Upfront: A portion of the cost must be paid upfront and the remaining hours in the term are billed at a discounted hourly rate, regardless of whether the Reserved Instance is being used.
-      No Upfront: You are billed a discounted hourly rate for every hour within the term, regardless of whether the Reserved Instance is being used. No upfront payment is required.
-      
-  Spot Instances 
-    – Request unused EC2 instances, which can reduce your Amazon EC2 costs significantly.
-  Dedicated Hosts 
-    – Pay for a physical host that is fully dedicated to running your instances, and bring your existing per-socket, per-core, or per-VM software licenses to reduce costs.
-  Dedicated Instances 
-    – Pay, by the hour, for instances that run on single-tenant hardware.
-  Capacity Reservations 
-    – Reserve capacity for your EC2 instances in a specific Availability Zone for any duration.
-    
+ Event
+  - An event is a JSON-formatted document that contains data for a Lambda function to process
+  - The runtime converts the event to an object and passes it to your function code.
+  
+  
+  
+  
+  
+  
+
     
