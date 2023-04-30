@@ -208,7 +208,16 @@ Feature:
     - IAM for authentication
     - Amazon VPC for isolation
   -  Amazon EKS are fully compatible with applications running on any standard Kubernetes environment  
-   
+  - Amazon EKS runs a single tenant Kubernetes control plane for each cluster.
+  - The control plane infrastructure isn't shared across clusters or AWS accounts.
+  - The control plane consists of at least two API server instances and three etcd instances that run across three Availability Zones within an AWS Region
+  - Amazon EKS uses Amazon VPC network policies to restrict traffic between control plane components to within a single cluster. 
+  - All of the data stored by the etcd nodes and associated Amazon EBS volumes is encrypted using AWS KMS.
+
+Control Plane
+  - The Amazon EKS control plane consists of control plane nodes that run the Kubernetes software, such as etcd and the Kubernetes API server.
+  - The control plane runs in an account managed by AWS, and the Kubernetes API is exposed via the Amazon EKS endpoint associated with your cluster
+  - Each Amazon EKS cluster control plane is single-tenant and unique, and runs on its own set of Amazon EC2 instances.
 
 
   
