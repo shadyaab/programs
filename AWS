@@ -54,54 +54,75 @@ Lambda runs your code on a high-availability compute infrastructure and performs
 including server and operating system maintenance, capacity provisioning and automatic scaling, and logging. With Lambda, 
 all you need to do is supply your code in one of the language runtimes that Lambda supports.
   
-Function 
-  - A function is a resource that you can invoke to run your code in Lambda. 
-  - A function has code to process the events that you pass into the function or that other AWS services send to the function.
+Concpets:  
+  Function 
+    - A function is a resource that you can invoke to run your code in Lambda. 
+    - A function has code to process the events that you pass into the function or that other AWS services send to the function.
+
+  Trigger
+    - A trigger is a resource or configuration that invokes a Lambda function.
+    - triggers include AWS services that you can configure to invoke a function and event source mappings (An event source mapping 
+      is a resource in Lambda that reads items from a stream or queue and invokes a function.)
+
+  Event
+    - An event is a JSON-formatted document that contains data for a Lambda function to process
+    - The runtime converts the event to an object and passes it to your function code.
+
+  Execution environment
+    - An execution environment provides a secure and isolated runtime environment for your Lambda function
+    - An execution environment manages the processes and resources that are required to run the function.
+
+  Instruction set architecture
+    - The instruction set architecture determines the type of computer processor that Lambda uses to run the function
+
+  Deployment package
+    - You deploy your Lambda function code using a deployment package. 
+    - Supports both zip file and Container Image
+
+  Runtime
+    - The runtime provides a language-specific environment that runs in an execution environmen
+    - If you package your code as a .zip file archive, you must configure your function to use a runtime that matches your programming language.
+    -  For a container image, you include the runtime when you build the image.
+
+  Layer
+    - A Lambda layer is a .zip file archive that can contain additional code or other content. A layer can contain libraries, a custom runtime, 
+      data, or configuration files.
+    - Layers also promote code sharing and separation of responsibilities so that you can iterate faster on writing business logic.
+    - Supports upto five layers
+    - Functions deployed as a container image do not use layers.
+
+  Concurrency
+    - Concurrency is the number of requests that your function is serving at any given time
+
+  Qualifier
+    - When you invoke or view a function, you can include a qualifier to specify a version or alias
+    - You can use versions and aliases together to provide a stable interface for clients to invoke your function.
+
+  Destination
+    - A destination is an AWS resource where Lambda can send events from an asynchronous invocation.
+    - You can configure a destination for events that fail processing.
   
-Trigger
-  - A trigger is a resource or configuration that invokes a Lambda function.
-  - triggers include AWS services that you can configure to invoke a function and event source mappings (An event source mapping 
-    is a resource in Lambda that reads items from a stream or queue and invokes a function.)
+Invoking Function:  
+  Synchronous invocation
+    - When you invoke a function synchronously, Lambda runs the function and waits for a response.
+    - when the function completes, Lambda returns the response from the function's code with additional data, such as the version of the function 
+      that was invoked. 
+  
+  Asynchronous invocation
+    - Several AWS services, such as Amazon Simple Storage Service (Amazon S3) and Amazon Simple Notification Service (Amazon SNS), invoke functions asynchronously to process events.
+    - Lambda queues the events before sending them to the function.
+    - A separate process reads events from the queue and sends them to your function
+    - To invoke a function asynchronously, set the invocation type parameter to Event.
+    - Lambda manages the function's asynchronous event queue and attempts to retry on errors.
+    - If the function doesn't have enough concurrency available to process all events, additional requests are throttled
+    - You can configure separate destinations for events that are processed successfully, and events that fail all processing attempts
+    - you can configure a standard Amazon SQS queue or standard Amazon SNS topic as a dead-letter queue for discarded events
     
-Event
-  - An event is a JSON-formatted document that contains data for a Lambda function to process
-  - The runtime converts the event to an object and passes it to your function code.
-  
-Execution environment
-  - An execution environment provides a secure and isolated runtime environment for your Lambda function
-  - An execution environment manages the processes and resources that are required to run the function.
-  
-Instruction set architecture
-  - The instruction set architecture determines the type of computer processor that Lambda uses to run the function
-  
-Deployment package
-  - You deploy your Lambda function code using a deployment package. 
-  - Supports both zip file and Container Image
-  
-Runtime
-  - The runtime provides a language-specific environment that runs in an execution environmen
-  - If you package your code as a .zip file archive, you must configure your function to use a runtime that matches your programming language.
-  -  For a container image, you include the runtime when you build the image.
-  
-Layer
-  - A Lambda layer is a .zip file archive that can contain additional code or other content. A layer can contain libraries, a custom runtime, 
-    data, or configuration files.
-  - Layers also promote code sharing and separation of responsibilities so that you can iterate faster on writing business logic.
-  - Supports upto five layers
-  - Functions deployed as a container image do not use layers.
-  
-Concurrency
-  - Concurrency is the number of requests that your function is serving at any given time
-  
-Qualifier
-  - When you invoke or view a function, you can include a qualifier to specify a version or alias
-  - You can use versions and aliases together to provide a stable interface for clients to invoke your function.
-  
-Destination
-  - A destination is an AWS resource where Lambda can send events from an asynchronous invocation.
-  - You can configure a destination for events that fail processing.
-  
-  
+  Event source mappings
+    - An event source mapping is a Lambda resource that reads from an event source and invokes a Lambda function
+    - You can use event source mappings to process items from a stream or queue in services that don't invoke Lambda functions directly.
+    
+      
   
 
 
