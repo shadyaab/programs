@@ -125,8 +125,47 @@ Invoking Function:
       
 AWS Batch
 ---------
+AWS Batch helps you to run batch computing workloads on the AWS Cloud. Batch computing is a common way for developers, scientists, 
+and engineers to access large amounts of compute resources. AWS Batch removes the undifferentiated heavy lifting of configuring and 
+managing the required infrastructure, similar to traditional batch computing software. This service can efficiently provision resources 
+in response to jobs submitted in order to eliminate capacity constraints, reduce compute costs, and deliver results quickly.
+
+Components of AWS Batch
+  Jobs
+    - A unit of work (such as a shell script, a Linux executable, or a Docker container image) that you submit to AWS Batch.
+    - It has a name, and runs as a containerized application on AWS Fargate or Amazon EC2 resources in your compute environment, 
+      using parameters that you specify in a job definition.
+    - Jobs can reference other jobs by name or by ID
+    
+  Job Definitions
+    - A job definition specifies how jobs are to be run.
+    - You can think of a job definition as a blueprint for the resources in your job.
+    - You can supply your job with an IAM role to provide access to other AWS resources. You also specify both memory and CPU requirements. 
+    - While each job must reference a job definition, many of the parameters that are specified in the job definition can be overridden at runtime.
+    
+  Job Queues
+    - When you submit an AWS Batch job, you submit it to a particular job queue, where the job resides until it's scheduled onto a compute environment.
+    - You associate one or more compute environments with a job queue.
+    - You can also assign priority values for these compute environments and even across job queues themselves.
+    
+  Compute Environment
+    - A compute environment is a set of managed or unmanaged compute resources that are used to run jobs
+    - With managed compute environments, you can specify desired compute type (Fargate or EC2) at several levels of detail.
+    - With Unmanaged compute environments, you're responsible for setting up and scaling the instances in an Amazon ECS cluster that AWS Batch 
+      creates for you.
+
 AWS Outposts
------------
+--------------
+AWS Outposts is a fully managed service that extends AWS infrastructure, services, APIs, and tools to customer premises. By providing 
+local access to AWS managed infrastructure, AWS Outposts enables customers to build and run applications on premises using the same 
+programming interfaces as in AWS Regions, while using local compute and storage resources for lower latency and local data processing needs.
+
+An Outpost is a pool of AWS compute and storage capacity deployed at a customer site. AWS operates, monitors, and manages this capacity as 
+part of an AWS Region. You can create subnets on your Outpost and specify them when you create AWS resources such as EC2 instances, 
+EBS volumes, ECS clusters, and RDS instances. Instances in Outpost subnets communicate with other instances in the AWS Region using 
+private IP addresses, all within the same VPC.
+
+
 ECR
 -----
 ECS
