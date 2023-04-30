@@ -123,7 +123,18 @@ Invoking Function:
     - You can use event source mappings to process items from a stream or queue in services that don't invoke Lambda functions directly.
     
       
-  
+AWS Batch
+---------
+AWS Outposts
+-----------
+ECR
+-----
+ECS
+-------
+EKS
+-----
+
+
 
 
 
