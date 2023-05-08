@@ -1,1 +1,85 @@
+S3
+-------
+Amazon Simple Storage Service (Amazon S3) is an object storage service that offers industry-leading scalability, data availability, security, and performance
+Amazon S3 is an object storage service that stores data as objects within buckets. An object is a file and any metadata that describes the file. 
+A bucket is a container for objects.
+You can use bucket policies, AWS Identity and Access Management (IAM) policies, access control lists (ACLs), and S3 Access Points to manage access.
 
+Feature:
+  Buckets
+    - A bucket is a container for objects stored in Amazon S3. You can store any number of objects in a bucket and can have up to 100 buckets in your account. 
+
+  Objects
+    - Objects are the fundamental entities stored in Amazon S3.
+    - Objects consist of object data and metadata. The metadata is a set of name-value pairs that describe the object.
+
+  Key
+    - An object key (or key name) is the unique identifier for an object within a bucket
+
+  Versioning
+    - You can use S3 Versioning to keep multiple variants of an object in the same bucket.
+
+  Bucket policy
+    - A bucket policy is a resource-based AWS Identity and Access Management (IAM) policy that you can use to grant access permissions to your bucket and the objects in it.
+    - Only the bucket owner can associate a policy with a bucket.
+    - The permissions attached to the bucket apply to all of the objects in the bucket that are owned by the bucket owner.
+
+  S3 Access Points
+    - Amazon S3 Access Points are named network endpoints with dedicated access policies that describe how data can be accessed using that endpoint.
+    - Access Points are attached to buckets that you can use to perform S3 object operations, such as GetObject and PutObject
+    - Each access point has its own access point policy. You can configure Block Public Access settings for each access point.
+
+  Access control lists (ACLs)
+    - You can use ACLs to grant read and write permissions to authorized users for individual buckets and objects.
+    - The ACL defines which AWS accounts or groups are granted access and the type of access.
+    - ACLs are an access control mechanism that predates IAM
+    - When ACLs are disabled, the bucket owner owns all the objects in the bucket and manages access to them exclusively by using access-management policies.
+
+
+Amazon S3 storage classes
+  S3 Standard:
+    - the default storage class. If you don't specify the storage class when you upload an object, Amazon S3 assigns the S3 Standard storage class.
+    
+  S3 Standard-IA
+    - Amazon S3 stores the object data redundantly across multiple geographically separated Availability Zones 
+    - designed for long-lived and infrequently accessed data.
+    - Suitable for infrequently accessed data.
+
+  S3 One Zone-IA  
+    - Amazon S3 stores the object data in only one Availability Zone
+    - designed for long-lived and infrequently accessed data.
+    
+  
+  S3 Intelligent-Tiering
+    - S3 Intelligent-Tiering is an Amazon S3 storage class that's designed to optimize storage costs by automatically moving data to the most cost-effective 
+      access tier, without performance impact or operational overhead.S3 Intelligent-Tiering is the only cloud storage class that delivers automatic cost 
+      savings by moving data on a granular object level between access tiers
+    - S3 Intelligent-Tiering automatically stores objects in three access tiers:
+      - Frequent Access: Objects that are uploaded or transitioned to S3 Intelligent-Tiering are automatically stored in the Frequent Access tier.
+      - Infrequent Access: moves objects that have not been accessed in 30 consecutive days to the Infrequent Access tier.
+      - Archive Instant Access: Moves any existing objects that have not been accessed for 90 consecutive days moved to the Archive Instant Access tier.
+    - In addition to these three tiers, S3 Intelligent-Tiering offers two optional archive access tiers:
+      - Archive Access: 90 days
+      - Deep Archive Access: 180 days
+  
+  S3 Glacier Instant Retrieval
+    - Use for archiving data that is rarely accessed and requires milliseconds retrieval
+    - S3 Glacier Instant Retrieval has higher data access costs than S3 Standard-IA Since its for archiving
+  
+  S3 Glacier Flexible Retrieval
+    - Use for archives where portions of the data might need to be retrieved in minutes.
+    - minimum storage duration period of 90 days and can be accessed in as little as 1-5 minutes by using an expedited retrieval.
+  
+  S3 Glacier Deep Archive
+    - Use for archiving data that rarely needs to be accessed. 
+    - Data stored in the S3 Glacier Deep Archive storage class has a minimum storage duration period of 180 days and a default retrieval time of 12 hours. 
+    
+    
+    
+  
+  
+  
+  
+  
+  
+  
