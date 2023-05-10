@@ -92,6 +92,45 @@ Unsupported lifecycle transitions
   - Any storage class to the Reduced Redundancy Storage (RRS) class.
   - The S3 Intelligent-Tiering storage class to the S3 Standard-IA storage class.
   - The S3 One Zone-IA storage class to the S3 Intelligent-Tiering, S3 Standard-IA, or S3 Glacier Instant Retrieval storage classes.
+  
+
+Amazon EBS (Amazon Elastic Block Store)
+"""""""""""""""""""""""""""""""""""""""""""""
+Amazon Elastic Block Store (Amazon EBS) provides block level storage volumes for use with EC2 instances. EBS volumes behave like raw, unformatted block devices. 
+You can mount these volumes as devices on your instances. EBS volumes that are attached to an instance are exposed as storage volumes that persist independently 
+from the life of the instance. You can create a file system on top of these volumes, or use them in any way you would use a block device (such as a hard drive). 
+You can dynamically change the configuration of a volume attached to an instance.
+
+We recommend Amazon EBS for data that must be quickly accessible and requires long-term persistence. EBS volumes are particularly well-suited for use as the 
+primary storage for file systems, databases, or for any applications that require fine granular updates and access to raw, unformatted, block-level storage. A
+mazon EBS is well suited to both database-style applications that rely on random reads and writes, and to throughput-intensive applications that perform long, 
+continuous reads and writes.
+
+Features of Amazon EBS
+-----------------------
+  - You create an EBS volume in a specific Availability Zone, and then attach it to an instance in that same Availability Zone. To make a volume available 
+    outside of the Availability Zone, you can create a snapshot and restore that snapshot to a new volume anywhere in that Region.
+  - You can copy snapshots to other Regions and then restore them to new volumes there, making it easier to leverage multiple AWS Regions for geographical 
+    expansion, data center migration, and disaster recovery.
+  - Amazon EBS provides the following volume types: General Purpose SSD, Provisioned IOPS SSD, Throughput Optimized HDD, and Cold HDD.
+  - You can create your EBS volumes as encrypted volumes, in order to meet a wide range of data-at-rest encryption 
+  - hen you create an encrypted EBS volume and attach it to a supported instance type, data stored at rest on the volume, disk I/O, and snapshots created 
+    from the volume are all encrypted. 
+  - You can create point-in-time snapshots of EBS volumes, which are persisted to Amazon S3. Snapshots protect data for long-term durability, and they can be used as 
+    the starting point for new EBS volumes
+  - Performance metrics, such as bandwidth, throughput, latency, and average queue length, are available through the AWS Management Console
+  
+  
+Volume type
+-------------
+
+
+
+
+AWS Backup
+"""""""""""""""""""""""""""""""""""""""""""""
+
+
     
   
   
